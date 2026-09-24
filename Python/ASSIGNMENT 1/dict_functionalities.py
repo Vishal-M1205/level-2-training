@@ -29,7 +29,7 @@ print("After popitem:", person)
 del person["city"]
 print("After del:", person)
 
-print("Is 'name' in dict:", "name" in person)
+print("name" in person)
 print("Length:", len(person))
 
 copy_dict = person.copy()
