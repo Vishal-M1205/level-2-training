@@ -192,10 +192,7 @@ def highestSalary(employees: list[dict]):
     if not employees:
         print("No Employees")
     else:
-        highest = employees[0]
-
-        for emp in employees:
-            highest = emp if highest["salary"] < emp["salary"] else highest
+        highest = max(employees, key=lambda emp: emp["salary"])
 
         viewEmployee(highest)
 
