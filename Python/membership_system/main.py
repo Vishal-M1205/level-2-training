@@ -13,7 +13,8 @@ def main():
 2. View Membership Plans
 3. Search Member
 4. View All Member
-5. Exit
+5. Update Member
+6. Exit
 
 """)
             option = int(input("Enter a option : "))
@@ -27,7 +28,7 @@ def main():
                 case 4:
                     view_all_members()
                 case 5:
-                    break
+                    update_member_detail()
                 case _:
                     print("Invalid option!")
 

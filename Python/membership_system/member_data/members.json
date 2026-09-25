@@ -65,10 +65,10 @@
     },
     {
         "member_id": "M020",
-        "name": "Vishal",
-        "phone": 6379543139,
-        "age": 20,
-        "city": "Coimbatore",
+        "name": "Vichu",
+        "phone": 1234567890,
+        "age": 18,
+        "city": "Salem",
         "membership_id": "MS005"
     },
     {
@@ -78,5 +78,13 @@
         "age": 23,
         "city": "Chennai",
         "membership_id": "MS003"
+    },
+    {
+        "member_id": "M111",
+        "name": "XOOO",
+        "phone": 1234567890,
+        "age": 90,
+        "city": "Bangalore",
+        "membership_id": "MS005"
     }
 ]

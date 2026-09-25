@@ -165,3 +165,24 @@ def search_member() -> None:
             raise Exception("No user found !")
     except Exception as e:
         print(e)
+
+
+def update_member_detail():
+    try:
+        update_id = get_member_id(search=True)
+        member_data = read_json(MEMBERS_FILE)
+        for member in member_data:
+            if member["member_id"] == update_id:
+                member_name = get_member_name()
+                member_mobile_no = get_member_mobile_no()
+                member_age = get_member_age()
+                member_city = get_member_city(CITIES)
+
+                member["name"] = member_name
+                member["phone"] = member_mobile_no
+                member["age"] = member_age
+                member["city"] = member_city
+                write_json(MEMBERS_FILE, member_data, append=False)
+                break
+    except Exception as e:
+        print(e)

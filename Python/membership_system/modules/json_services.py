@@ -1,7 +1,8 @@
 import json
+from pathlib import Path
 
 
-def read_json(filepath):
+def read_json(filepath: Path):
     try:
         with open(filepath, "r") as file:
             data = json.load(file)
@@ -12,10 +13,13 @@ def read_json(filepath):
         print(f"{filepath} : wrong JSON Format")
 
 
-def write_json(filepath, payload):
+def write_json(filepath: Path, payload: dict, append: bool = True):
     try:
-        data = read_json(filepath)
-        data.append(payload)
+        if append:
+            data = read_json(filepath)
+            data.append(payload)
+        else:
+            data = payload
         with open(filepath, "w") as file:
             json.dump(data, file, indent=4)
     except FileNotFoundError:
