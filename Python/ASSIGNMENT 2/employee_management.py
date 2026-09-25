@@ -86,7 +86,7 @@ departments = ["Management", "Finance", "HR", "IT", "Marketing"]
 total_employee = len(employees)
 
 
-def getDepartment(departments: list) -> str:
+def get_department(departments: list) -> str:
     print("Choose Department :")
     for i, val in enumerate(departments, start=1):
         print(f"{i}. {val}")
@@ -98,7 +98,7 @@ def getDepartment(departments: list) -> str:
             print("Invalid Option")
 
 
-def getEmployeeName() -> str:
+def get_employee_name() -> str:
     while True:
         employee_name = input("Enter Employee Name : ")
         if employee_name.replace(" ", "").isalpha():
@@ -107,7 +107,7 @@ def getEmployeeName() -> str:
             print("Invalid Name")
 
 
-def getEmployeeAge() -> int:
+def get_employee_age() -> int:
     while True:
         employee_age = input("Enter Employee Age : ")
         if employee_age.isdigit() and int(employee_age) >= 18:
@@ -116,7 +116,7 @@ def getEmployeeAge() -> int:
             print("Invalid Age")
 
 
-def getEmployeeSalary() -> float:
+def get_employee_salary() -> float:
     while True:
         employee_salary = float(input("Enter Salary : "))
 
@@ -126,25 +126,25 @@ def getEmployeeSalary() -> float:
             print("Invalid Salary")
 
 
-def addEmployee():
+def add_employee():
     global total_employee
     while True:
-        id = int(input("Enter employee ID : "))
+        employee_id = int(input("Enter employee ID : "))
         duplicate = False
         for emp in employees:
-            if emp["id"] == id:
+            if emp["id"] == employee_id:
                 duplicate = True
                 print("Employee Already Found")
         if not duplicate:
             break
 
-    employee_name = getEmployeeName()
-    employee_age = getEmployeeAge()
-    employee_salary = getEmployeeSalary()
-    employee_department = getDepartment(departments)
+    employee_name = get_employee_name()
+    employee_age = get_employee_age()
+    employee_salary = get_employee_salary()
+    employee_department = get_department(departments)
 
     data = {
-        "id": id,
+        "id": employee_id,
         "name": employee_name,
         "age": employee_age,
         "salary": employee_salary,
@@ -156,7 +156,7 @@ def addEmployee():
     print("Employee Added !")
 
 
-def viewAllEmployees():
+def view_all_employees():
     if not employees:
         print("No Employees Found")
         return
@@ -168,17 +168,17 @@ def viewAllEmployees():
             print(f"{key.capitalize()} : {value}")
 
 
-def searchEmployees():
+def search_employees():
     id = int(input("Enter ID to search employee : "))
     for emp in employees:
         if emp["id"] == id:
-            viewEmployee(emp)
+            view_employee(emp)
             return
     print("No employee found")
     return
 
 
-def viewEmployee(emp: dict):
+def view_employee(emp: dict):
     print("=" * 30)
     print(f"ID : {emp['id']}")
     print(f"Name : {emp['name']}")
@@ -188,16 +188,16 @@ def viewEmployee(emp: dict):
     print("=" * 30)
 
 
-def highestSalary(employees: list[dict]):
+def highest_salary(employees: list[dict]):
     if not employees:
         print("No Employees")
     else:
         highest = max(employees, key=lambda emp: emp["salary"])
 
-        viewEmployee(highest)
+        view_employee(highest)
 
 
-def displayEmployeesByDepartment():
+def display_employees_by_department():
     if not employees:
         print("No Employees")
         return
@@ -205,17 +205,17 @@ def displayEmployeesByDepartment():
     found = False
     for emp in employees:
         if emp["department"].lower() == department.lower():
-            viewEmployee(emp)
+            view_employee(emp)
             found = True
     if not found:
         print("No employee found")
 
 
-def dispTotalEmployeeCount():
+def disp_total_employee_count():
     print(f"Total Employees : {total_employee}")
 
 
-def dispDepartmentWiseCount(departments: list):
+def disp_department_wise_count(departments: list):
     department_emp_count = {d: 0 for d in departments}
     for emp in employees:
         department_emp_count[emp["department"]] += 1
@@ -225,11 +225,17 @@ def dispDepartmentWiseCount(departments: list):
         print(f"{key} - {val}")
 
 
-def departmentWiseHighestSalary(departments: list, employees: list[dict]):
+def department_wise_highest_salary(departments: list, employees: list[dict]):
     for i, d in enumerate(departments, start=1):
         dept_employees = [x for x in employees if x["department"] == d]
         print(f"{i}. Highest Salary in {d}")
-        highestSalary(dept_employees)
+        highest_salary(dept_employees)
+
+
+def sort_employees_on_salary(employees: list[dict]):
+    sorted_employees = sorted(employees, key=lambda emp: emp["salary"])
+    for emp in sorted_employees:
+        view_employee(emp)
 
 
 while True:
@@ -242,27 +248,30 @@ while True:
         "6. Total Employee Count\n"
         "7. Department-wise Employee Count\n"
         "8. Department-wise Highest Salary\n"
-        "9. Exit"
+        "9. Sort Employees based on salary\n"
+        "10. Exit"
     )
     option = int(input("Enter a option : "))
     match option:
         case 1:
-            addEmployee()
+            add_employee()
         case 2:
-            viewAllEmployees()
+            view_all_employees()
         case 3:
-            searchEmployees()
+            search_employees()
         case 4:
-            highestSalary(employees)
+            highest_salary(employees)
         case 5:
-            displayEmployeesByDepartment()
+            display_employees_by_department()
         case 6:
-            dispTotalEmployeeCount()
+            disp_total_employee_count()
         case 7:
-            dispDepartmentWiseCount(departments)
+            disp_department_wise_count(departments)
         case 8:
-            departmentWiseHighestSalary(departments, employees)
+            department_wise_highest_salary(departments, employees)
         case 9:
+            sort_employees_on_salary(employees)
+        case 10:
             break
         case _:
             print("Invalid Option")
