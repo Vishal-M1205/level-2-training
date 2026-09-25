@@ -1,1 +1,0 @@
-dept = ["IT", "Finance", "Media"]
