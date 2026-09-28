@@ -1,0 +1,59 @@
+[
+  {
+    "membership_id": "MS001",
+    "plan_name": "Basic",
+    "duration_months": 3,
+    "price": 1500,
+    "features": ["Gym Access", "Locker Access"],
+    "status": "active"
+  },
+  {
+    "membership_id": "MS002",
+    "plan_name": "Premium",
+    "duration_months": 6,
+    "price": 3500,
+    "features": [
+      "Gym Access",
+      "Locker Access",
+      "Personal Trainer",
+      "Diet Consultation"
+    ],
+    "status": "active"
+  },
+  {
+    "membership_id": "MS003",
+    "plan_name": "Gold",
+    "duration_months": 12,
+    "price": 6000,
+    "features": [
+      "Gym Access",
+      "Locker Access",
+      "Personal Trainer",
+      "Diet Consultation",
+      "Sauna Access"
+    ],
+    "status": "active"
+  },
+  {
+    "membership_id": "MS004",
+    "plan_name": "Student",
+    "duration_months": 6,
+    "price": 2500,
+    "features": ["Gym Access", "Locker Access"],
+    "status": "active"
+  },
+  {
+    "membership_id": "MS005",
+    "plan_name": "Corporate",
+    "duration_months": 12,
+    "price": 7500,
+    "features": [
+      "Gym Access",
+      "Locker Access",
+      "Personal Trainer",
+      "Diet Consultation",
+      "Group Training"
+    ],
+    "status": "active"
+  }
+]
