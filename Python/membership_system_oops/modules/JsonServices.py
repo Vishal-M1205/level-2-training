@@ -1,8 +1,8 @@
 import json
-from pathlib import Path
+from modules.DataService import DataService
 
 
-class JsonServices:
+class JsonServices(DataService):
 
     def read(self, filepath):
         try:
