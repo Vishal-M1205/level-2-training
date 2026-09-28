@@ -11,13 +11,8 @@ class MemberService:
     filepath: Path
     validator_service: object
     config_data: object
-    membership_service: object
     data_service: object
-
-    member_id: int = None
-    member_name: str = None
-    member_mobile_no: int = None
-    member_age: int = None
+    membership_service: object = None
 
     def get_member_id(self, search=False) -> str:
         while True:
@@ -31,9 +26,9 @@ class MemberService:
     def get_member_name(self) -> str:
         while True:
             try:
-                self.member_name = input("Enter name : ")
-                if self.member_name.replace(" ", "").isalpha():
-                    return self.member_name
+                member_name = input("Enter name : ")
+                if member_name.replace(" ", "").isalpha():
+                    return member_name
                 else:
                     raise ValueError("Member name should have alphabet only")
             except ValueError as e:
@@ -42,9 +37,9 @@ class MemberService:
     def get_member_mobile_no(self) -> int:
         while True:
             try:
-                self.member_mobile_no = input("Enter Mobile No : ")
-                if len(self.member_mobile_no) == 10 and self.member_mobile_no.isdigit():
-                    return int(self.member_mobile_no)
+                member_mobile_no = input("Enter Mobile No : ")
+                if len(member_mobile_no) == 10 and member_mobile_no.isdigit():
+                    return int(member_mobile_no)
                 else:
                     raise TypeError("Mob.No should only have 10 digits")
             except TypeError as e:
@@ -53,10 +48,10 @@ class MemberService:
     def get_member_age(self) -> int:
         while True:
             try:
-                self.member_age = input("Enter Age : ")
-                if self.member_age.isdigit():
-                    if int(self.member_age) >= 18 and int(self.member_age) <= 100:
-                        return int(self.member_age)
+                member_age = input("Enter Age : ")
+                if member_age.isdigit():
+                    if int(member_age) >= 18 and int(member_age) <= 100:
+                        return int(member_age)
                     else:
                         raise ValueError(
                             "Age should be greater than 18 and less than 100"
@@ -108,6 +103,10 @@ class MemberService:
             except Exception as e:
                 print(e)
 
+    def get_all_member_data(self):
+        member_data = self.data_service.read(self.filepath)
+        return member_data
+
     def add_member(self) -> None:
         try:
             member_id = self.get_member_id()
@@ -132,7 +131,7 @@ class MemberService:
 
     def view_all_members(self) -> None:
         try:
-            member_data = self.data_service.read(self.filepath)
+            member_data = self.get_all_member_data()
             for i, member in enumerate(member_data, start=1):
                 print(f"{i}.")
                 print(f"""

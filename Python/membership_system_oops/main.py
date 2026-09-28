@@ -13,17 +13,20 @@ member_valditor_service = Validator(
     filepath=member_data_path, data_service=data_service
 )
 
-membership_service = MembershipService(
-    filepath=membership_data_path, data_service=data_service
-)
-
 member_service = MemberService(
     filepath=member_data_path,
     validator_service=member_valditor_service,
     config_data=config,
-    membership_service=membership_service,
     data_service=data_service,
 )
+
+membership_service = MembershipService(
+    filepath=membership_data_path,
+    data_service=data_service,
+    member_service=member_service,
+)
+
+member_service.membership_service = membership_service
 
 
 def main():
@@ -37,7 +40,8 @@ def main():
 3. Search Member
 4. View All Member
 5. Update Member
-6. Exit
+6. Count of Members in Each Membership
+7. Exit
 
 """)
             option = int(input("Enter a option : "))
@@ -53,6 +57,8 @@ def main():
                 case 5:
                     member_service.update_member_detail()
                 case 6:
+                    membership_service.count_members_in_membership()
+                case 7:
                     break
                 case _:
                     print("Invalid option!")

@@ -94,5 +94,13 @@
         "age": 78,
         "city": "Salem",
         "membership_id": "MS005"
+    },
+    {
+        "member_id": "M024",
+        "name": "VI",
+        "phone": 1234567890,
+        "age": 34,
+        "city": "Coimbatore",
+        "membership_id": "MS001"
     }
 ]
