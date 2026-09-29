@@ -1,10 +1,11 @@
 import json
 from modules.DataService import DataService
+from pathlib import Path
 
 
 class JsonServices(DataService):
 
-    def read(self, filepath):
+    def read(self, filepath: Path):
         try:
             with open(filepath, "r") as file:
                 data = json.load(file)
@@ -14,7 +15,7 @@ class JsonServices(DataService):
         except json.JSONDecodeError:
             print(f"{filepath} : wrong JSON Format")
 
-    def write(self, filepath, payload: dict, append: bool = True):
+    def write(self, filepath: Path, payload: dict, append: bool = True):
         try:
             if append:
                 data = self.read(filepath)

@@ -1,6 +1,9 @@
+from pathlib import Path
+
+
 class Validator:
 
-    def __init__(self, filepath, data_service):
+    def __init__(self, filepath: Path, data_service: object):
         self.filepath = filepath
         self.data_service = data_service
 

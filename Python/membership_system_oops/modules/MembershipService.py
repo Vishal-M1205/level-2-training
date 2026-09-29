@@ -1,11 +1,9 @@
 from pathlib import Path
-from modules.Config import config
-from modules.JsonServices import JsonServices
 
 
 class MembershipService:
 
-    def __init__(self, filepath, data_service, member_service):
+    def __init__(self, filepath: Path, data_service: object, member_service: object):
         self.filepath = filepath
         self.data_service = data_service
         self.member_service = member_service
