@@ -46,7 +46,7 @@ class MemberService:
             try:
                 member_age = input("Enter Age : ")
                 if member_age.isdigit():
-                    if int(member_age) >= 18 and int(member_age) <= 100:
+                    if 18 <= int(member_age) <= 100:
                         return int(member_age)
                     else:
                         raise ValueError(
@@ -64,7 +64,7 @@ class MemberService:
                     print(f"{i}. {city}")
                 option = input("Enter the option")
                 if option.isdigit():
-                    if int(option) > 0 and int(option) <= len(self.config_data.cities):
+                    if 0 < int(option) <= len(self.config_data.cities):
                         return self.config_data.cities[int(option) - 1]
                     else:
                         raise ValueError("Invalid option")
@@ -169,7 +169,7 @@ class MemberService:
         except Exception as e:
             print(e)
 
-    def update_member_detail(self):
+    def update_member_detail(self) -> None:
         try:
             update_id = self.get_member_id(search=True)
             member_data = self.data_service.read(self.filepath)

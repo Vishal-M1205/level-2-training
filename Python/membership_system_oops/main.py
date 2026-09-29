@@ -41,7 +41,8 @@ def main():
 4. View All Member
 5. Update Member
 6. Count of Members in Each Membership
-7. Exit
+7. View Amount earned in memberships
+8. Exit
 
 """)
             option = int(input("Enter a option : "))
@@ -57,8 +58,10 @@ def main():
                 case 5:
                     member_service.update_member_detail()
                 case 6:
-                    membership_service.count_members_in_membership()
+                    membership_service.view_no_members_in_membership()
                 case 7:
+                    membership_service.view_amount_earned_in_membership()
+                case 8:
                     break
                 case _:
                     print("Invalid option!")
