@@ -43,7 +43,7 @@ class MembershipService:
 
         return count_data
 
-    def view_no_members_in_membership(self):
+    def view_no_members_in_membership(self) -> None:
         membership_data = self.get_membership_details()
 
         count_data = self.count_members_in_membership()
@@ -56,7 +56,7 @@ class MembershipService:
             print(data["count"])
             print("=" * 45)
 
-    def calc_amount_earned_in_membership(self):
+    def calc_amount_earned_in_membership(self) -> None:
 
         membership_data = self.get_membership_details()
 
@@ -71,12 +71,11 @@ class MembershipService:
         }
 
         total = sum(amount_per_membership.values())
-
         amount_per_membership.update({"total": total})
 
         return amount_per_membership
 
-    def view_amount_earned_in_membership(self):
+    def view_amount_earned_in_membership(self) -> None:
 
         amount_per_membership = self.calc_amount_earned_in_membership()
 

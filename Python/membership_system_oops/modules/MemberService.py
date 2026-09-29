@@ -99,7 +99,7 @@ class MemberService:
             except Exception as e:
                 print(e)
 
-    def get_all_member_data(self):
+    def get_all_member_data(self) -> list[dict]:
         member_data = self.data_service.read(self.filepath)
         return member_data
 
