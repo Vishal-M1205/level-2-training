@@ -3,15 +3,17 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
 
+load_dotenv()
+
 
 @dataclass
 class Config:
 
     app: str
-    data_folder: str
-    cwd: str
-    members_file: str
-    memberships_file: str
+    data_folder: Path
+    cwd: Path
+    members_file: Path
+    memberships_file: Path
     cities: list[str]
 
     @classmethod

@@ -1,9 +1,9 @@
 import json
-from modules.DataService import DataService
+from repositories.data_repository import DataRepository
 from pathlib import Path
 
 
-class JsonServices(DataService):
+class JsonRepository(DataRepository):
 
     def read(self, filepath: Path) -> list[dict]:
         try:
@@ -15,13 +15,9 @@ class JsonServices(DataService):
         except json.JSONDecodeError:
             print(f"{filepath} : wrong JSON Format")
 
-    def write(self, filepath: Path, payload: dict, append: bool = True) -> None:
+    def write(self, filepath: Path, payload: dict) -> None:
         try:
-            if append:
-                data = self.read(filepath)
-                data.append(payload)
-            else:
-                data = payload
+            data = payload
             with open(filepath, "w") as file:
                 json.dump(data, file, indent=4)
         except FileNotFoundError:

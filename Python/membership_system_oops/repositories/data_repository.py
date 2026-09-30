@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class DataService(ABC):
+class DataRepository(ABC):
 
     @abstractmethod
     def read():

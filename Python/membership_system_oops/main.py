@@ -1,73 +1,143 @@
-from modules.Config import config
-from modules.MemberService import MemberService
-from modules.MembershipService import MembershipService
-from modules.Validators import Validator
-from modules.JsonServices import JsonServices
+from core.config import config
 
-member_data_path = config.members_file
-membership_data_path = config.memberships_file
+from repositories.json_repository import JsonRepository
+from repositories.member_repository import MemberRepository
+from repositories.membership_repository import MembershipRepository
 
-data_service = JsonServices()
+from services.member_service import MemberService
+from services.membership_service import MembershipService
 
-member_valditor_service = Validator(
-    filepath=member_data_path, data_service=data_service
-)
+from validators.member_validator import MemberValidator
 
-member_service = MemberService(
-    filepath=member_data_path,
-    validator_service=member_valditor_service,
-    config_data=config,
-    data_service=data_service,
-)
-
-membership_service = MembershipService(
-    filepath=membership_data_path,
-    data_service=data_service,
-    member_service=member_service,
-)
-
-member_service.membership_service = membership_service
+from cli.member_input import MemberInput
+from cli.display import Display
 
 
-def main():
-    try:
-        while True:
-            print(f"""
-{config.app}
+def main() -> None:
 
-1. Add Membership
+    json_repository = JsonRepository()
+
+    member_repository = MemberRepository(
+        filepath=config.members_file,
+        json_repository=json_repository,
+    )
+
+    membership_repository = MembershipRepository(
+        filepath=config.memberships_file,
+        json_repository=json_repository,
+    )
+
+    member_service = MemberService(
+        member_repository=member_repository,
+    )
+
+    membership_service = MembershipService(
+        membership_repository=membership_repository,
+        member_repository=member_repository,
+    )
+
+    member_validator = MemberValidator()
+
+    member_input = MemberInput(
+        validator=member_validator,
+        config=config,
+        membership_service=membership_service,
+    )
+
+    while True:
+
+        print("""
+
+      MEMBERSHIP SYSTEM
+
+
+1. Add Member
 2. View Membership Plans
 3. Search Member
-4. View All Member
+4. View All Members
 5. Update Member
-6. Count of Members in Each Membership
-7. View Amount earned in memberships
+6. View Members Per Membership
+7. View Amount Earned
 8. Exit
-
 """)
-            option = int(input("Enter a option : "))
-            match option:
-                case 1:
-                    member_service.add_member()
-                case 2:
-                    membership_service.view_membership_plans()
-                case 3:
-                    member_service.search_member()
-                case 4:
-                    member_service.view_all_members()
-                case 5:
-                    member_service.update_member_detail()
-                case 6:
-                    membership_service.view_no_members_in_membership()
-                case 7:
-                    membership_service.view_amount_earned_in_membership()
-                case 8:
-                    break
-                case _:
-                    print("Invalid option!")
 
-    except Exception as e:
-        print(e)
+        option = input("Enter your option: ").strip()
+
+        try:
+
+            if option == "1":
+
+                member = member_input.get_new_member()
+
+                member_service.add_member(member)
+
+                Display.show_message("Member added successfully.")
+
+            elif option == "2":
+
+                memberships = membership_service.get_membership_plans()
+
+                Display.show_membership_plans(memberships)
+
+            elif option == "3":
+
+                member_id = member_input.get_member_id()
+
+                member = member_service.get_member(member_id)
+
+                Display.show_member(member)
+
+            elif option == "4":
+
+                members = member_service.get_all_members()
+
+                Display.show_all_members(members)
+
+            elif option == "5":
+
+                member_id = member_input.get_member_id(search=True)
+
+                existing_member = member_service.get_member(member_id)
+
+                updated_member = member_input.get_updated_member(existing_member)
+
+                member_service.update_member(updated_member)
+
+                Display.show_message("Member updated successfully.")
+
+            elif option == "6":
+
+                counts = membership_service.count_members_in_membership()
+
+                memberships = membership_service.get_membership_plans()
+
+                Display.show_membership_counts(
+                    counts,
+                    memberships,
+                )
+
+            elif option == "7":
+
+                revenue = membership_service.calculate_amount_earned()
+
+                memberships = membership_service.get_membership_plans()
+
+                Display.show_membership_revenue(
+                    revenue,
+                    memberships,
+                )
+
+            elif option == "8":
+                break
+
+            else:
+
+                print("Invalid option. Please try again.")
+
+        except (ValueError, FileNotFoundError) as error:
+
+            Display.show_error(error)
 
 
-main()
+if __name__ == "__main__":
+    main()
