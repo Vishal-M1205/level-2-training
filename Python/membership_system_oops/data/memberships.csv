@@ -1,0 +1,6 @@
+membership_id,plan_name,duration_months,price,features,status
+MS001,Basic,3,1500,"Gym Access; Locker Access",active
+MS002,Premium,6,3500,"Gym Access; Locker Access; Personal Trainer; Diet Consultation",active
+MS003,Gold,12,6000,"Gym Access; Locker Access; Personal Trainer; Diet Consultation; Sauna Access",active
+MS004,Student,6,2500,"Gym Access; Locker Access",active
+MS005,Corporate,12,7500,"Gym Access; Locker Access; Personal Trainer; Diet Consultation; Group Training",active

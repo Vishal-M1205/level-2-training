@@ -1,6 +1,6 @@
 from core.config import config
 
-from repositories.json_repository import JsonRepository
+from repositories.csv_repository import CSVRepository
 from repositories.member_repository import MemberRepository
 from repositories.membership_repository import MembershipRepository
 
@@ -14,21 +14,19 @@ from util.member_input import MemberInput
 from util.membership_input import MembershipInput
 from util.display import Display
 
-from exceptions.membership_exception import MembershipException
-
 
 def main() -> None:
 
-    json_repository = JsonRepository()
+    csv_repository = CSVRepository()
 
     member_repository = MemberRepository(
         filepath=config.members_file,
-        json_repository=json_repository,
+        data_repository=csv_repository,
     )
 
     membership_repository = MembershipRepository(
         filepath=config.memberships_file,
-        json_repository=json_repository,
+        data_repository=csv_repository,
     )
 
     member_service = MemberService(
@@ -151,7 +149,7 @@ def main() -> None:
                 Display.show_membership_plans([result])
 
             elif option == "11":
-                break
+                csv_repository.read(config.members_file)
 
             else:
                 print("Invalid option. Please try again.")

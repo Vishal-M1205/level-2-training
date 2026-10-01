@@ -9,13 +9,13 @@ class MembershipRepository:
     def __init__(
         self,
         filepath: Path,
-        json_repository: JsonRepository,
+        data_repository: JsonRepository,
     ):
         self.filepath = filepath
-        self.json_repository = json_repository
+        self.data_repository = data_repository
 
     def get_all(self) -> list[Membership]:
-        data = self.json_repository.read(self.filepath)
+        data = self.data_repository.read(self.filepath)
 
         return [Membership(**membership) for membership in data]
 
