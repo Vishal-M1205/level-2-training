@@ -149,7 +149,7 @@ def main() -> None:
                 Display.show_membership_plans([result])
 
             elif option == "11":
-                csv_repository.read(config.members_file)
+                break
 
             else:
                 print("Invalid option. Please try again.")

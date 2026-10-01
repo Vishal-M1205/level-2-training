@@ -15,8 +15,9 @@ class CSVRepository(DataRepository):
 
     def write(self, filepath: Path, payload: dict) -> None:
         try:
-            with open(filepath, "w") as file:
+            with open(filepath, "w", newline="") as file:
                 writer = csv.DictWriter(file, fieldnames=payload[0].keys())
+                writer.writeheader()
                 writer.writerows(payload)
 
         except Exception as e:
