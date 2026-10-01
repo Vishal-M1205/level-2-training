@@ -1,9 +1,13 @@
 from models.membership import Membership
 from repositories.membership_repository import MembershipRepository
 from repositories.member_repository import MemberRepository
+from exceptions.membership_exception import MembershipException
+from typing import *
 
 
 class MembershipService:
+
+    Membership_List: TypeAlias = list[Membership]
 
     def __init__(
         self,
@@ -13,14 +17,14 @@ class MembershipService:
         self.membership_repository = membership_repository
         self.member_repository = member_repository
 
-    def get_membership_plans(self) -> list[Membership]:
+    def get_membership_plans(self) -> Membership_List:
         return self.membership_repository.get_all()
 
     def get_membership(self, membership_id: str) -> Membership:
         membership = self.membership_repository.get_by_id(membership_id)
 
         if membership is None:
-            raise ValueError("Membership plan not found")
+            raise MembershipException("Membership plan not found")
 
         return membership
 
@@ -51,3 +55,17 @@ class MembershipService:
         revenue["total"] = sum(revenue.values())
 
         return revenue
+
+    def find_top_3_membership_plans(self) -> Membership_List:
+        memberships = self.membership_repository.get_all()
+
+        sorted_membership = sorted(memberships, key=lambda x: x.price, reverse=True)
+
+        return sorted_membership[:3]
+
+    def membership_plans_below_3000(self) -> Membership_List:
+        memberships = self.membership_repository.get_all()
+
+        below_3000 = filter(lambda x: x.price <= 3000, memberships)
+
+        return list(below_3000)

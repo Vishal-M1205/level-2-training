@@ -1,5 +1,6 @@
 from models.member import Member
 from repositories.member_repository import MemberRepository
+from exceptions.member_exception import MemberException
 
 
 class MemberService:
@@ -11,7 +12,7 @@ class MemberService:
         existing_member = self.member_repository.get_by_id(member.member_id)
 
         if existing_member is not None:
-            raise ValueError("Member ID already exists")
+            raise MemberException("Member ID already exists")
 
         self.member_repository.add(member)
 
@@ -19,7 +20,7 @@ class MemberService:
         member = self.member_repository.get_by_id(member_id)
 
         if member is None:
-            raise ValueError("No member found")
+            raise MemberException("No member found")
 
         return member
 
@@ -30,6 +31,6 @@ class MemberService:
         existing_member = self.member_repository.get_by_id(member.member_id)
 
         if existing_member is None:
-            raise ValueError("No member found")
+            raise MemberException("No member found")
 
         self.member_repository.update(member)

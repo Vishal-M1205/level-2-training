@@ -1,0 +1,5 @@
+find_top_3_membership_plans()  
+    get memberships - repos
+    sort it - logic
+    slice it and store - logic
+    then view - view (cli)

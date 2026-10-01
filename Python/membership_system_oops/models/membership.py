@@ -8,3 +8,4 @@ class Membership:
     duration_months: int
     price: float
     features: list[str]
+    status: str

@@ -14,9 +14,14 @@ member_repository = MemberRepository(
 )
 
 
-def test_get_member():
+@pytest.fixture
+def member_service():
+    return MemberService(member_repository)
 
-    member = Member(
+
+@pytest.fixture
+def member_data():
+    return Member(
         member_id="M001",
         name="Arun Kumar",
         phone="9876543210",
@@ -24,9 +29,3 @@ def test_get_member():
         city="Coimbatore",
         membership_id="MS001",
     )
-
-    service = MemberService(member_repository)
-
-    result = service.member_repository.get_by_id("M001")
-
-    assert result == member

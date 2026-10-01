@@ -8,9 +8,13 @@ from services.member_service import MemberService
 from services.membership_service import MembershipService
 
 from validators.member_validator import MemberValidator
+from validators.membership_validator import MembershipValidator
 
-from cli.member_input import MemberInput
-from cli.display import Display
+from util.member_input import MemberInput
+from util.membership_input import MembershipInput
+from util.display import Display
+
+from exceptions.membership_exception import MembershipException
 
 
 def main() -> None:
@@ -44,6 +48,9 @@ def main() -> None:
         membership_service=membership_service,
     )
 
+    membership_validator = MembershipValidator()
+    membership_input = MembershipInput(validator=membership_validator)
+
     while True:
 
         print("""
@@ -58,7 +65,10 @@ def main() -> None:
 5. Update Member
 6. View Members Per Membership
 7. View Amount Earned
-8. Exit
+8. Top 3 Membership Plan
+9. Membership Plans below 3000
+10. Search Membership Plan
+11. Exit
 """)
 
         option = input("Enter your option: ").strip()
@@ -128,13 +138,25 @@ def main() -> None:
                 )
 
             elif option == "8":
+                top_3 = membership_service.find_top_3_membership_plans()
+                Display.show_membership_plans(top_3)
+
+            elif option == "9":
+                below_3000 = membership_service.membership_plans_below_3000()
+                Display.show_membership_plans(below_3000)
+
+            elif option == "10":
+                membership_id = membership_input.get_membership_id()
+                result = membership_service.get_membership(membership_id)
+                Display.show_membership_plans([result])
+
+            elif option == "11":
                 break
 
             else:
-
                 print("Invalid option. Please try again.")
 
-        except (ValueError, FileNotFoundError) as error:
+        except Exception as error:
 
             Display.show_error(error)
 
