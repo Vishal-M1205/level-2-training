@@ -6,7 +6,7 @@ class Member(BaseModel):
         description="ID starts with M followed by 3 digits", examples=["M001"]
     )
     name: str
-    phone: int
+    phone: int | str
     age: int = Field(ge=18, le=100)
     city: str
     membership_id: str

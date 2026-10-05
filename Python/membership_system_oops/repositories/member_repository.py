@@ -3,13 +3,14 @@ from pathlib import Path
 
 from models.member import Member
 from repositories.json_repository import JsonRepository
+from repositories.csv_repository import CSVRepository
 
 logger = logging.getLogger(__name__)
 
 
 class MemberRepository:
 
-    def __init__(self, filepath: Path, data_repository: JsonRepository):
+    def __init__(self, filepath: Path, data_repository: JsonRepository | CSVRepository):
         self.filepath = filepath
         self.data_repository = data_repository
 

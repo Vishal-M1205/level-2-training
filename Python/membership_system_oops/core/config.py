@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from dotenv import load_dotenv
 from pathlib import Path
 import os
+from typing import Optional
 
 load_dotenv()
 
@@ -9,7 +10,7 @@ load_dotenv()
 @dataclass
 class Config:
 
-    app: str
+    app: Optional[str]
     data_folder: Path
     cwd: Path
     members_file: Path
@@ -19,6 +20,9 @@ class Config:
     @classmethod
     def get_env(cls):
         cwd = Path.cwd()
+        if os.getenv("DATA_FOLDER") is None:
+            raise ValueError("DATA_FOLDER not found in .env")
+
         data_folder = Path.cwd() / os.getenv("DATA_FOLDER")
         return cls(
             app=os.getenv("APP"),
