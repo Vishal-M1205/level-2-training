@@ -3,14 +3,14 @@ import pytest
 from models.member import Member
 from services.member_service import MemberService
 from repositories.member_repository import MemberRepository
-from repositories.json_repository import JsonRepository
+from repositories.csv_repository import CSVRepository
 from core.config import config
 
-json_repository = JsonRepository()
+csv_repository = CSVRepository()
 
 member_repository = MemberRepository(
     filepath=config.members_file,
-    json_repository=json_repository,
+    data_repository=csv_repository,
 )
 
 

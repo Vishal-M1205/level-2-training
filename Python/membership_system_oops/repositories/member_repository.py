@@ -6,6 +6,7 @@ from repositories.json_repository import JsonRepository
 
 logger = logging.getLogger(__name__)
 
+
 class MemberRepository:
 
     def __init__(self, filepath: Path, data_repository: JsonRepository):
@@ -15,7 +16,7 @@ class MemberRepository:
     def get_all(self) -> list[Member]:
         data = self.data_repository.read(self.filepath)
 
-        return [Member(**member) for member in data]
+        return [Member.model_validate(member) for member in data]
 
     def get_by_id(self, member_id: str) -> Member | None:
         members = self.get_all()
