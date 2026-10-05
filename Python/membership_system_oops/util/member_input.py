@@ -5,9 +5,9 @@ logger = logging.getLogger(__name__)
 
 class MemberInput:
 
-    def __init__(self, validator, config, membership_service):
+    def __init__(self, validator, cities, membership_service):
         self.validator = validator
-        self.config = config
+        self.cities = cities
         self.membership_service = membership_service
 
     def get_member_id(self) -> str:
@@ -47,7 +47,7 @@ class MemberInput:
                 logger.exception(e)
 
     def get_member_city(self) -> str:
-        cities = self.config.cities
+        cities = self.cities
 
         while True:
             for i, city in enumerate(cities, start=1):

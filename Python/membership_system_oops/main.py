@@ -1,6 +1,6 @@
 import logging
 import asyncio
-from core.config import config
+from core.config import members_file, memberships_file, cities
 
 
 from repositories.csv_repository import CSVRepository
@@ -29,12 +29,12 @@ async def main() -> None:
     setup_logger()
 
     member_repository = MemberRepository(
-        filepath=config.members_file,
+        filepath=members_file,
         data_repository=csv_repository,
     )
 
     membership_repository = MembershipRepository(
-        filepath=config.memberships_file,
+        filepath=memberships_file,
         data_repository=csv_repository,
     )
 
@@ -51,7 +51,7 @@ async def main() -> None:
 
     member_input = MemberInput(
         validator=member_validator,
-        config=config,
+        cities=cities,
         membership_service=membership_service,
     )
 

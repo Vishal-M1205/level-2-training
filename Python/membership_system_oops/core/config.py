@@ -1,37 +1,28 @@
-from dataclasses import dataclass
-from dotenv import load_dotenv
+from pydantic_settings import BaseSettings, SettingsConfigDict
 from pathlib import Path
 import os
-from typing import Optional
-
-load_dotenv()
 
 
-@dataclass
-class Config:
+class Config(BaseSettings):
 
-    app: Optional[str]
-    data_folder: Path
-    cwd: Path
+    app: str
+    data_folder: str
     members_file: Path
     memberships_file: Path
-    cities: list[str]
+    cities: str
 
-    @classmethod
-    def get_env(cls):
-        cwd = Path.cwd()
-        if os.getenv("DATA_FOLDER") is None:
-            raise ValueError("DATA_FOLDER not found in .env")
-
-        data_folder = Path.cwd() / os.getenv("DATA_FOLDER")
-        return cls(
-            app=os.getenv("APP"),
-            cwd=cwd,
-            data_folder=data_folder,
-            members_file=data_folder / os.getenv("MEMBERS_FILE"),
-            memberships_file=data_folder / os.getenv("MEMBERSHIPS_FILE"),
-            cities=os.getenv("CITIES").split(","),
-        )
+    model_config = SettingsConfigDict(env_file=".env")
 
 
-config = Config.get_env()
+config = Config()
+
+cwd = Path.cwd()
+app: str = config.app
+
+data_folder: Path = cwd / config.data_folder
+
+members_file: Path = data_folder / config.members_file
+
+memberships_file: Path = data_folder / config.memberships_file
+
+cities: list[str] = config.cities.split(",")
