@@ -1,7 +1,9 @@
 import csv
+import logging
 from repositories.data_repository import DataRepository
 from pathlib import Path
 
+logger = logging.getLogger(__name__)
 
 class CSVRepository(DataRepository):
 
@@ -11,7 +13,7 @@ class CSVRepository(DataRepository):
                 reader = csv.DictReader(file)
                 return list(reader)
         except Exception as e:
-            print(e)
+            logger.exception(e)
 
     def write(self, filepath: Path, payload: dict) -> None:
         try:
@@ -21,4 +23,4 @@ class CSVRepository(DataRepository):
                 writer.writerows(payload)
 
         except Exception as e:
-            print(e)
+            logger.exception(e)

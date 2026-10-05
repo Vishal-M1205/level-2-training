@@ -1,11 +1,10 @@
-from dataclasses import dataclass
+from pydantic import BaseModel, Field
 
 
-@dataclass
-class Membership:
-    membership_id: str
+class Membership(BaseModel):
+    membership_id: str = Field(description="ID start with MS and followed by 3 digits")
     plan_name: str
     duration_months: int
     price: float
-    features: list[str]
+    features: str | list[str]
     status: str

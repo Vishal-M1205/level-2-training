@@ -1,29 +1,16 @@
 member_id,name,phone,age,city,membership_id
 M001,Arun Kumar,9876543210,25,Coimbatore,MS001
-
 M002,Priya Sharma,9876543211,28,Chennai,MS002
-
 M003,Rahul Verma,9876543212,31,Bangalore,MS003
-
 M004,Sneha Raj,9876543213,24,Coimbatore,MS001
-
 M005,Karthik S,9876543214,29,Madurai,MS004
-
 M006,Divya Menon,9876543215,27,Chennai,MS002
-
 M007,Vignesh Kumar,9876543216,33,Salem,MS005
-
 M008,Meena Krishnan,9876543217,26,Coimbatore,MS003
-
 M020,Vichu,1234567890,18,Salem,MS005
-
 M021,Vish,6379543139,23,Chennai,MS003
-
 M111,XOOO,1234567890,90,Bangalore,MS005
-
 M023,Visss,1234567890,78,Salem,MS005
-
 M024,VI,1234567890,34,Coimbatore,MS001
-
 M990,Vi,1234567890,22,Bangalore,MS002
-
+M555,Vishall,1234567890,45,Chennai,MS005

@@ -1,8 +1,10 @@
+import logging
 from pathlib import Path
 
 from models.member import Member
 from repositories.json_repository import JsonRepository
 
+logger = logging.getLogger(__name__)
 
 class MemberRepository:
 
@@ -38,19 +40,11 @@ class MemberRepository:
                 self.save_all(members)
                 return
 
-        raise ValueError(f"Member with ID {updated_member.member_id} not found")
+        msg = f"Member with ID {updated_member.member_id} not found"
+        logger.error(msg)
+        raise ValueError(msg)
 
     def save_all(self, members: list[Member]) -> None:
-        data = [
-            {
-                "member_id": member.member_id,
-                "name": member.name,
-                "phone": member.phone,
-                "age": member.age,
-                "city": member.city,
-                "membership_id": member.membership_id,
-            }
-            for member in members
-        ]
+        data = [member.model_dump() for member in members]
 
         self.data_repository.write(self.filepath, data)

@@ -1,44 +1,70 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
 class MemberValidator:
 
     @staticmethod
     def validate_id(member_id: str) -> None:
         if not member_id:
-            raise ValueError("Member ID cannot be empty.")
+            msg = "Member ID cannot be empty."
+            logger.error(msg)
+            raise ValueError(msg)
 
         if not member_id.startswith("M"):
-            raise ValueError("Member ID must start with 'M'.")
+            msg = "Member ID must start with 'M'."
+            logger.error(msg)
+            raise ValueError(msg)
 
         if not member_id[1:].isdigit():
-            raise ValueError("Member ID must contain numbers after 'M'.")
+            msg = "Member ID must contain numbers after 'M'."
+            logger.error(msg)
+            raise ValueError(msg)
 
     @staticmethod
     def validate_name(name: str) -> None:
         if not name:
-            raise ValueError("Name cannot be empty.")
+            msg = "Name cannot be empty."
+            logger.error(msg)
+            raise ValueError(msg)
 
         if not name.replace(" ", "").isalpha():
-            raise ValueError("Name must contain only alphabets.")
+            msg = "Name must contain only alphabets."
+            logger.error(msg)
+            raise ValueError(msg)
 
     @staticmethod
     def validate_phone(phone: str) -> None:
         if not phone:
-            raise ValueError("Phone number cannot be empty.")
+            msg = "Phone number cannot be empty."
+            logger.error(msg)
+            raise ValueError(msg)
 
         if not phone.isdigit():
-            raise ValueError("Phone number must contain only digits.")
+            msg = "Phone number must contain only digits."
+            logger.error(msg)
+            raise ValueError(msg)
 
         if len(phone) != 10:
-            raise ValueError("Phone number must contain exactly 10 digits.")
+            msg = "Phone number must contain exactly 10 digits."
+            logger.error(msg)
+            raise ValueError(msg)
 
     @staticmethod
     def validate_age(age: str) -> None:
         if not age:
-            raise ValueError("Age cannot be empty.")
+            msg = "Age cannot be empty."
+            logger.error(msg)
+            raise ValueError(msg)
 
         if not age.isdigit():
-            raise ValueError("Age must contain only numbers.")
+            msg = "Age must contain only numbers."
+            logger.error(msg)
+            raise ValueError(msg)
 
         age = int(age)
 
         if not 18 <= age <= 100:
-            raise ValueError("Age must be between 18 and 100.")
+            msg = "Age must be between 18 and 100."
+            logger.error(msg)
+            raise ValueError(msg)

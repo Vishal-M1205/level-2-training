@@ -1,9 +1,11 @@
+import logging
 from models.membership import Membership
 from repositories.membership_repository import MembershipRepository
 from repositories.member_repository import MemberRepository
 from exceptions.membership_exception import MembershipException
 from typing import *
 
+logger = logging.getLogger(__name__)
 
 class MembershipService:
 
@@ -24,7 +26,9 @@ class MembershipService:
         membership = self.membership_repository.get_by_id(membership_id)
 
         if membership is None:
-            raise MembershipException("Membership plan not found")
+            msg = "Membership plan not found"
+            logger.error(msg)
+            raise MembershipException(msg)
 
         return membership
 

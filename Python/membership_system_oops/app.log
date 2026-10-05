@@ -1,0 +1,27 @@
+2026-10-05 10:26:20,017 - util.member_report - ERROR - [Errno 2] No such file or directory: 'member_details.txt'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\util\member_report.py", line 15, in generate_member_details_report
+    with open("member_details.txt") as file:
+         ~~~~^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'member_details.txt'
+2026-10-05 10:27:01,642 - util.member_report - INFO - Report generated successfully
+2026-10-05 10:30:18,746 - util.member_report - INFO - Report generated successfully 
+
+2026-10-05 14:40:21,747 - validators.member_validator - ERROR - Member ID must contain numbers after 'M'. 
+2026-10-05 14:40:21,749 - util.member_input - ERROR - Member ID must contain numbers after 'M'. 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\util\member_input.py", line 17, in get_member_id
+    self.validator.validate_id(member_id)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\validators\member_validator.py", line 22, in validate_id
+    raise ValueError(msg)
+ValueError: Member ID must contain numbers after 'M'.
+2026-10-05 14:40:45,328 - validators.member_validator - ERROR - Member ID must start with 'M'. 
+2026-10-05 14:40:45,329 - util.member_input - ERROR - Member ID must start with 'M'. 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\util\member_input.py", line 17, in get_member_id
+    self.validator.validate_id(member_id)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\validators\member_validator.py", line 17, in validate_id
+    raise ValueError(msg)
+ValueError: Member ID must start with 'M'.

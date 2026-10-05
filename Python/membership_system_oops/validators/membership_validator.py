@@ -1,5 +1,7 @@
+import logging
 from exceptions.membership_exception import MembershipException
 
+logger = logging.getLogger(__name__)
 
 class MembershipValidator:
 
@@ -12,4 +14,6 @@ class MembershipValidator:
         ):
             return membership_id
         else:
-            raise MembershipException("Invalid format of ID (eg:MS001)")
+            msg = "Invalid format of ID (eg:MS001)"
+            logger.error(msg)
+            raise MembershipException(msg)

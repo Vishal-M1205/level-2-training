@@ -17,7 +17,7 @@ class MembershipRepository:
     def get_all(self) -> list[Membership]:
         data = self.data_repository.read(self.filepath)
 
-        return [Membership(**membership) for membership in data]
+        return [Membership.model_validate(membership) for membership in data]
 
     def get_by_id(
         self,
