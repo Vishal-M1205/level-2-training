@@ -4,8 +4,10 @@ from repositories.membership_repository import MembershipRepository
 from repositories.member_repository import MemberRepository
 from exceptions.membership_exception import MembershipException
 from typing import *
+from functools import cache
 
 logger = logging.getLogger(__name__)
+
 
 class MembershipService:
 
@@ -60,6 +62,7 @@ class MembershipService:
 
         return revenue
 
+    @cache
     def find_top_3_membership_plans(self) -> Membership_List:
         memberships = self.membership_repository.get_all()
 
@@ -67,6 +70,7 @@ class MembershipService:
 
         return sorted_membership[:3]
 
+    @cache
     def membership_plans_below_3000(self) -> Membership_List:
         memberships = self.membership_repository.get_all()
 

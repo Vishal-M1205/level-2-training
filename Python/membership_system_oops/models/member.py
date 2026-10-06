@@ -9,4 +9,4 @@ class Member(BaseModel):
     phone: int | str
     age: int = Field(ge=18, le=100)
     city: str
-    membership_id: str
+    membership_id: str = Field(description="ID start with MS and followed by 3 digits")
