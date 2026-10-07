@@ -108,7 +108,7 @@ RETURNING id;
 
 def patch_student(student_id: int, payload: dict):
     fields = list(payload.keys())
-    values = list(payload.values())
+    values = tuple(payload.values())
 
     query = [f"{x} = %s" for x in fields]
 
@@ -116,9 +116,17 @@ def patch_student(student_id: int, payload: dict):
 
     with get_connection() as connection:
         with connection.cursor() as cursor:
-            cursor.execute("""
+            cursor.execute(
+                f"""
 UPDATE students
 SET 
-%s
+{query}
+WHERE 
+id = %s
+""",
+                (*values, student_id),
+            )
 
-""")
+            row = cursor.fetchone()
+
+            return row
