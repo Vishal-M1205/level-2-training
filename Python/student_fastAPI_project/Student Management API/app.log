@@ -44,3 +44,17 @@ Traceback (most recent call last):
     ...<2 lines>...
     )
 TypeError: query parameters should be a sequence or a mapping, got str
+2026-10-07 22:41:31,858 : app.services.student_service : ERROR : the last operation didn't produce records (command status: UPDATE 1)
+Traceback (most recent call last):
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 76, in patch_student
+    return student_repository.patch_student(student_id, payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\repositories\student_repository.py", line 130, in patch_student
+    row = cursor.fetchone()
+          ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Vishal Manivannan\AppData\Local\Programs\Python\Python312\Lib\site-packages\psycopg\cursor.py", line 248, in fetchone
+    res = self._check_result_for_fetch()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Vishal Manivannan\AppData\Local\Programs\Python\Python312\Lib\site-packages\psycopg\_cursor_base.py", line 628, in _check_result_for_fetch
+    raise e.ProgrammingError(
+psycopg.ProgrammingError: the last operation didn't produce records (command status: UPDATE 1)

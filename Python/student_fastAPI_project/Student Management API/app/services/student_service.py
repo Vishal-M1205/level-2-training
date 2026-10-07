@@ -73,7 +73,7 @@ def delete_student(student_id: int):
 def patch_student(student_id: int, student: StudentPatch):
     try:
         payload = student.model_dump(exclude_unset=True)
-        print(student_repository.patch_student(student_id, payload))
+        return student_repository.patch_student(student_id, payload)
     except HTTPException:
         raise
     except Exception as e:

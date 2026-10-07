@@ -123,6 +123,7 @@ SET
 {query}
 WHERE 
 id = %s
+RETURNING id,name,age,gender;
 """,
                 (*values, student_id),
             )

@@ -67,6 +67,6 @@ def delete_student(student_id: int):
     student_service.delete_student(student_id)
 
 
-@router.patch("/{student_id}")
+@router.patch("/{student_id}", response_model=StudentResponse)
 def patch_student(student_id: int, student: StudentPatch):
     return student_service.patch_student(student_id, student)
