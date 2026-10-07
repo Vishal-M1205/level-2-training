@@ -107,4 +107,18 @@ RETURNING id;
 
 
 def patch_student(student_id: int, payload: dict):
-    pass
+    fields = list(payload.keys())
+    values = list(payload.values())
+
+    query = [f"{x} = %s" for x in fields]
+
+    query = ",".join(query)
+
+    with get_connection() as connection:
+        with connection.cursor() as cursor:
+            cursor.execute("""
+UPDATE students
+SET 
+%s
+
+""")

@@ -138,4 +138,15 @@ CASE
 FROM marks
 GROUP BY student_id;
 
+SELECT * FROM students;
 
+ALTER TABLE marks DROP CONSTRAINT fk_subject_id;
+ALTER TABLE grades DROP CONSTRAINT fk_student_id;
+
+ALTER TABLE marks 
+  ADD CONSTRAINT fk_subject_id 
+  FOREIGN KEY (subject_id) REFERENCES subjects(id) ON DELETE CASCADE;
+
+ALTER TABLE grades 
+  ADD CONSTRAINT fk_student_id FOREIGN KEY (student_id) 
+  REFERENCES students(id);
