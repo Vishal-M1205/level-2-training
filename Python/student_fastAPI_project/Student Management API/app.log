@@ -1,0 +1,46 @@
+2026-10-07 10:16:37,482 : app.main : ERROR : query parameters should be a sequence or a mapping, got str
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\main.py", line 59, in get_student_by_id
+                    cursor.execute(
+                    ~~~~~~~~~~~~~~^
+                        """
+                        ^^^
+    ...<8 lines>...
+                        (student_id),
+                        ^^^^^^^^^^^^^
+                    )
+                    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor.py", line 113, in execute
+    self._conn.wait(
+    ~~~~~~~~~~~~~~~^
+        self._execute_gen(query, params, prepare=prepare, binary=binary)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\connection.py", line 495, in wait
+    return waiting.wait(
+           ~~~~~~~~~~~~^
+        gen, self.pgconn.socket, interval=interval, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\waiting.py", line 363, in wait_select
+    s = gen.send(ready)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_cursor_base.py", line 205, in _execute_gen
+    pgq = self._convert_query(query, params)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_cursor_base.py", line 465, in _convert_query
+    pgq.convert(query, params)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_queries.py", line 92, in convert
+    self.dump(vars)
+    ~~~~~~~~~^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_queries.py", line 101, in dump
+    params = self.validate_and_reorder_params(self._parts, vars, self._order)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_queries.py", line 138, in validate_and_reorder_params
+    if PostgresQuery.is_params_sequence(vars):
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_queries.py", line 124, in is_params_sequence
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: query parameters should be a sequence or a mapping, got str
