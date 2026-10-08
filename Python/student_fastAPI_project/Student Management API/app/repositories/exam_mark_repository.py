@@ -1,136 +1,116 @@
 from app.database import get_connection
-from app.schemas.student import StudentCreate, StudentUpdate
+from app.schemas.exam_mark import ExamMarkCreate, ExamMarkUpdate
 
 
-async def get_all_students():
+async def get_all_exam_marks():
     async with await get_connection() as connection:
         async with connection.cursor() as cursor:
             await cursor.execute("""
-  SELECT 
-  id,
-  name,
-  age,
-  gender 
-  FROM students
+SELECT 
+id,
+student_id,
+subject_id,
+mark
+FROM 
+exam_marks
 """)
-            rows = await cursor.fetchall()  #! if no records found fetchall return [] not None
+            rows = await cursor.fetchall()
             return rows
 
 
-async def get_student_by_id(student_id: int):
+async def get_exam_mark_by_id(exam_mark_id: int):
     async with await get_connection() as connection:
         async with connection.cursor() as cursor:
             await cursor.execute(
                 """
 SELECT 
-  id,
-  name,
-  age,
-  gender 
-  FROM students
-  WHERE id = %s
+id,
+student_id,
+subject_id,
+mark 
+FROM 
+exam_marks
+WHERE id = %s
 """,
-                (student_id,),
+                (exam_mark_id,),
             )
-            row = await cursor.fetchone()  #! fetchone return None
+            row = await cursor.fetchone()
             return row
 
 
-"""
-In the create_student , no need for connection.commit()/rollback()
-because the contextmanage will call rollback on exception
-and commit() on exit of the context
-
-"""
-
-
-async def create_student(student: StudentCreate):
+async def create_exam_mark(exam_mark: ExamMarkCreate):
     async with await get_connection() as connection:
         async with connection.cursor() as cursor:
             await cursor.execute(
                 """
 INSERT INTO 
-students (name,age,gender)
+exam_marks (student_id, subject_id, mark)
 VALUES 
-(%s,%s,%s) 
-RETURNING id,name,age,gender; 
-""",  #! RETURNING - fetches the row added
-                (student.name, student.age, student.gender),
-                #!ANOTHER WAY : tuple( student.model_dump().values() ),   object -> dict -> dict.values() -> tuple
+(%s, %s, %s) 
+RETURNING id, student_id, subject_id, mark; 
+""",
+                (exam_mark.student_id, exam_mark.subject_id, exam_mark.mark),
             )
-
             row = await cursor.fetchone()
-
             return row
 
 
-async def update_student(student_id: int, student: StudentUpdate):
+async def update_exam_mark(exam_mark_id: int, exam_mark: ExamMarkUpdate):
     async with await get_connection() as connection:
         async with connection.cursor() as cursor:
             await cursor.execute(
                 """
-UPDATE students 
+UPDATE exam_marks 
 SET 
-name = %s,
-age = %s,
-gender = %s
+student_id = %s,
+subject_id = %s,
+mark = %s
 WHERE 
 id = %s
-RETURNING id, name, age, gender; 
+RETURNING id, student_id, subject_id, mark; 
 """,
-                (student.name, student.age, student.gender, student_id),
+                (exam_mark.student_id, exam_mark.subject_id, exam_mark.mark, exam_mark_id),
             )
-
             row = await cursor.fetchone()
-
             return row
 
 
-async def delete_student(student_id: int):
+async def delete_exam_mark(exam_mark_id: int):
     async with await get_connection() as connection:
         async with connection.cursor() as cursor:
             await cursor.execute(
                 """
 DELETE 
-FROM students 
+FROM exam_marks 
 WHERE 
 id = %s
 RETURNING id;
-""",  #! If the student exist and deleted RETURNING will return the 'id'
-                #! No student found then None
-                (student_id,),
+""",
+                (exam_mark_id,),
             )
-
             row = await cursor.fetchone()
-
             return row
 
 
-async def patch_student(student_id: int, payload: dict):
+async def patch_exam_mark(exam_mark_id: int, payload: dict):
     fields = list(payload.keys())
     values = tuple(payload.values())
 
     query = [f"{x} = %s" for x in fields]
-
     query = ",".join(query)
 
     async with await get_connection() as connection:
         async with connection.cursor() as cursor:
             await cursor.execute(
                 f"""
-UPDATE students
+UPDATE exam_marks
 SET 
 {query}
 WHERE 
 id = %s
-RETURNING id,name,age,gender;
+RETURNING id, student_id, subject_id, mark;
 """,
-                (*values, student_id),
+                (*values, exam_mark_id),
             )
-
             row = await cursor.fetchone()
-
             return row
-
-
-

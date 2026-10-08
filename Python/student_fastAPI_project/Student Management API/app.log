@@ -58,3 +58,75 @@ Traceback (most recent call last):
   File "C:\Users\Vishal Manivannan\AppData\Local\Programs\Python\Python312\Lib\site-packages\psycopg\_cursor_base.py", line 628, in _check_result_for_fetch
     raise e.ProgrammingError(
 psycopg.ProgrammingError: the last operation didn't produce records (command status: UPDATE 1)
+2026-10-08 10:51:45,583 : app.services.subject_service : ERROR : 'int' object has no attribute 'name'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 19, in get_subject_by_id
+    subject = subject_repository.get_subject_by_id(subject_id)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 53, in get_subject_by_id
+    (subject.name,),
+     ^^^^^^^^^^^^
+AttributeError: 'int' object has no attribute 'name'
+2026-10-08 10:53:56,325 : app.services.subject_service : ERROR : the last operation didn't produce records (command status: UPDATE 1)
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 44, in update_subject
+    row = subject_repository.update_subject(subject_id, subject)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 75, in update_subject
+    row = cursor.fetchone()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor.py", line 248, in fetchone
+    res = self._check_result_for_fetch()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_cursor_base.py", line 628, in _check_result_for_fetch
+    raise e.ProgrammingError(
+        f"the last operation didn't produce records{detail}"
+    )
+psycopg.ProgrammingError: the last operation didn't produce records (command status: UPDATE 1)
+2026-10-08 14:34:58,641 : app.services.exam_mark_service : ERROR : duplicate key value violates unique constraint "unique_marks_student_subject"
+DETAIL:  Key (student_id, subject_id)=(1, 1) already exists.
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\exam_mark_service.py", line 34, in create_exam_mark
+    return await exam_mark_repository.create_exam_mark(exam_mark)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\exam_mark_repository.py", line 44, in create_exam_mark
+                await cursor.execute(
+    ...<8 lines>...
+                )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UniqueViolation: duplicate key value violates unique constraint "unique_marks_student_subject"
+DETAIL:  Key (student_id, subject_id)=(1, 1) already exists.
+2026-10-08 15:11:30,093 : app.services.result_service : ERROR : no result available
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\result_service.py", line 10, in get_student_exam_result_by_id
+    result = await result_repository.get_student_exam_result_by_id(student_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\result_repository.py", line 26, in get_student_exam_result_by_id
+    rows = await cursor.fetchall()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 283, in fetchall
+    res = self._check_result_for_fetch()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_cursor_base.py", line 611, in _check_result_for_fetch
+    raise e.ProgrammingError("no result available")
+psycopg.ProgrammingError: no result available
+2026-10-08 15:11:48,877 : app.services.result_service : ERROR : cannot insert multiple commands into a prepared statement
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\result_service.py", line 10, in get_student_exam_result_by_id
+    result = await result_repository.get_student_exam_result_by_id(student_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\result_repository.py", line 7, in get_student_exam_result_by_id
+                await cursor.execute(
+    ...<16 lines>...
+                )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.SyntaxError: cannot insert multiple commands into a prepared statement
+2026-10-08 15:11:54,344 : app.services.result_service : ERROR : cannot insert multiple commands into a prepared statement
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\result_service.py", line 10, in get_student_exam_result_by_id
+    result = await result_repository.get_student_exam_result_by_id(student_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\result_repository.py", line 7, in get_student_exam_result_by_id
+                await cursor.execute(
+    ...<16 lines>...
+                )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.SyntaxError: cannot insert multiple commands into a prepared statement

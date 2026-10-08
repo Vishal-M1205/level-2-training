@@ -1,11 +1,13 @@
 from fastapi import APIRouter, status
-from app.models.student import (
+from app.schemas.result import ResultResponse
+from app.schemas.student import (
     StudentPatch,
     StudentResponse,
     StudentCreate,
     StudentUpdate,
 )
 import app.services.student_service as student_service
+import app.services.result_service as result_service
 
 router = APIRouter(prefix="/students")
 
@@ -16,7 +18,7 @@ router = APIRouter(prefix="/students")
 
 
 @router.get("/", response_model=list[StudentResponse])
-def get_all_students():
+async def get_all_students():
     """
     Return all the students data,
     Explicitly mention the columns in the sql query,
@@ -24,14 +26,14 @@ def get_all_students():
     404 - for resource not found error,
     500 - for internal server error
     """
-    return student_service.get_all_students()
+    return await student_service.get_all_students()
 
 
 @router.get("/{student_id}", response_model=StudentResponse)
-def get_student_by_id(student_id: int):
+async def get_student_by_id(student_id: int):
     """GET student data using id (path parameter)"""
 
-    return student_service.get_student_by_id(student_id)
+    return await student_service.get_student_by_id(student_id)
 
 
 """
@@ -50,23 +52,30 @@ send back the newly created data.
 
 
 @router.post("/", response_model=StudentResponse, status_code=status.HTTP_201_CREATED)
-def create_student(student: StudentCreate):
+async def create_student(student: StudentCreate):
     """Creates a new Student Data"""
-    return student_service.create_student(student)
+    return await student_service.create_student(student)
 
 
 @router.put("/{student_id}", response_model=StudentResponse)
-def update_student(student_id: int, student: StudentUpdate):
+async def update_student(student_id: int, student: StudentUpdate):
     """Updates the exisitng Student data by Student ID"""
-    return student_service.update_student(student_id, student)
+    return await student_service.update_student(student_id, student)
 
 
 @router.delete("/{student_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_student(student_id: int):
+async def delete_student(student_id: int):
     """Deletes the Student data by Student ID , return no body"""
-    student_service.delete_student(student_id)
+    await student_service.delete_student(student_id)
 
 
 @router.patch("/{student_id}", response_model=StudentResponse)
-def patch_student(student_id: int, student: StudentPatch):
-    return student_service.patch_student(student_id, student)
+async def patch_student(student_id: int, student: StudentPatch):
+    """Modifies the data based on the field values"""
+    return await student_service.patch_student(student_id, student)
+
+
+@router.get("/{student_id}/results", response_model=ResultResponse)
+async def get_student_exam_result_by_id(student_id: int):
+    """Returns the exam result consist of marks, total and grade"""
+    return await result_service.get_student_exam_result_by_id(student_id)

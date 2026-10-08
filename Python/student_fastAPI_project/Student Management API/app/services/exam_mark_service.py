@@ -1,29 +1,15 @@
 from psycopg.errors import IntegrityError
-from app.schemas.student import StudentCreate, StudentPatch, StudentUpdate
-import app.repositories.student_repository as student_repository
+from app.schemas.exam_mark import ExamMarkCreate, ExamMarkPatch, ExamMarkUpdate
+import app.repositories.exam_mark_repository as exam_mark_repository
 from fastapi import HTTPException
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-async def get_all_students():
+async def get_all_exam_marks():
     try:
-        return await student_repository.get_all_students()
-    except IntegrityError:
-        raise HTTPException(status_code=409, detail="Integrity Error")
-    except Exception as e:
-        logger.exception(e)
-        raise HTTPException(status_code=500, detail="Internal Server Error")
-
-
-async def get_student_by_id(student_id: int):
-    try:
-        student = await student_repository.get_student_by_id(student_id)
-
-        if student is None:
-            raise HTTPException(status_code=404, detail="Student Not Found")
-        return student
+        return await exam_mark_repository.get_all_exam_marks()
     except HTTPException:
         raise
     except IntegrityError:
@@ -33,28 +19,38 @@ async def get_student_by_id(student_id: int):
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
-async def create_student(student: StudentCreate):
+async def get_exam_mark_by_id(exam_mark_id: int):
     try:
-        return await student_repository.create_student(student)
+        exam_mark = await exam_mark_repository.get_exam_mark_by_id(exam_mark_id)
+        if exam_mark is None:
+            raise HTTPException(status_code=404, detail="Exam Mark Not Found")
+        return exam_mark
     except HTTPException:
         raise
     except IntegrityError:
         raise HTTPException(status_code=409, detail="Integrity Error")
     except Exception as e:
-        #! Always log and re-raise the error as Internal Server Error - 500
         logger.exception(e)
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
-async def update_student(student_id: int, student: StudentUpdate):
+async def create_exam_mark(exam_mark: ExamMarkCreate):
     try:
-        row = await student_repository.update_student(student_id, student)
+        return await exam_mark_repository.create_exam_mark(exam_mark)
+    except HTTPException:
+        raise
+    except IntegrityError:
+        raise HTTPException(status_code=409, detail="Integrity Error")
+    except Exception as e:
+        logger.exception(e)
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
-        #! Checking the row because student data need to be there to update
-        #! If no data found in that ID , None is returned (fetchone)
+
+async def update_exam_mark(exam_mark_id: int, exam_mark: ExamMarkUpdate):
+    try:
+        row = await exam_mark_repository.update_exam_mark(exam_mark_id, exam_mark)
         if row is None:
-            raise HTTPException(status_code=404, detail="No Student Found")
-
+            raise HTTPException(status_code=404, detail="No Exam Mark Found")
         return row
     except HTTPException:
         raise
@@ -65,13 +61,11 @@ async def update_student(student_id: int, student: StudentUpdate):
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
-async def delete_student(student_id: int):
+async def delete_exam_mark(exam_mark_id: int):
     try:
-        row = await student_repository.delete_student(student_id)
-
+        row = await exam_mark_repository.delete_exam_mark(exam_mark_id)
         if row is None:
-            raise HTTPException(status_code=404, detail="No Student Found")
-
+            raise HTTPException(status_code=404, detail="No Exam Mark Found")
     except HTTPException:
         raise
     except IntegrityError:
@@ -81,16 +75,16 @@ async def delete_student(student_id: int):
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
-async def patch_student(student_id: int, student: StudentPatch):
+async def patch_exam_mark(exam_mark_id: int, exam_mark: ExamMarkPatch):
     try:
-        payload = student.model_dump(exclude_unset=True)
+        payload = exam_mark.model_dump(exclude_unset=True)
         if payload == {}:
             raise HTTPException(
                 status_code=400, detail="Bad Request : No fields provided for update"
             )
-        row = await student_repository.patch_student(student_id, payload)
+        row = await exam_mark_repository.patch_exam_mark(exam_mark_id, payload)
         if row is None:
-            raise HTTPException(status_code=404, detail="No Student Found")
+            raise HTTPException(status_code=404, detail="No Exam Mark Found")
         return row
     except HTTPException:
         raise
@@ -99,7 +93,4 @@ async def patch_student(student_id: int, student: StudentPatch):
     except Exception as e:
         logger.exception(e)
         raise HTTPException(status_code=500, detail="Internal Server Error")
-
-
-
 

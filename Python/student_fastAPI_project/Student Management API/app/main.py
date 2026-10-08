@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from app.utils.log import setup_logging
 from app.routes.student_routes import router as student_router
+from app.routes.subject_routes import router as subject_router
+from app.routes.exam_mark_routes import router as exam_mark_router
 import logging
 
 setup_logging()
@@ -11,6 +13,8 @@ app = FastAPI()
 # ! returns a FastAPI object to initiate the application
 
 app.include_router(student_router)
+app.include_router(subject_router)
+app.include_router(exam_mark_router)
 
 
 @app.get("/")

@@ -1,0 +1,15 @@
+from pydantic import BaseModel, Field
+from decimal import Decimal
+
+
+class SubjectMark(BaseModel):
+    subject_name: str
+    mark: Decimal = Field(max_digits=5, decimal_places=2, le=100.00)
+
+
+class ResultResponse(BaseModel):
+    student_id: int
+    student_name: str
+    subjects: list[SubjectMark]
+    total: Decimal = Field(max_digits=5, decimal_places=2, le=500.00)
+    grade: str = Field(max_length=1)

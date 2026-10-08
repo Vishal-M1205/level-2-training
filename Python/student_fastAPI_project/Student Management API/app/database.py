@@ -9,8 +9,9 @@ from psycopg.rows import dict_row
 
 def get_connection():
     """Takes the connection params required by the postgre sql ConnParams : *kwargs and
-    returns the connection object"""
-    return psycopg.connect(
+    returns the connection object  -
+    since it is a AsyncConnection it return a awaitable coroutine"""
+    return psycopg.AsyncConnection.connect(
         host=config.database_host,
         port=config.database_port,
         dbname=config.database_name,
