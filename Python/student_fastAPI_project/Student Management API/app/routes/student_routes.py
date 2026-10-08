@@ -8,6 +8,7 @@ from app.schemas.student import (
 )
 import app.services.student_service as student_service
 import app.services.result_service as result_service
+from typing import Optional
 
 router = APIRouter(prefix="/students")
 
@@ -18,7 +19,7 @@ router = APIRouter(prefix="/students")
 
 
 @router.get("/", response_model=list[StudentResponse])
-async def get_all_students():
+async def get_all_students(age: Optional[int] = None, gender: Optional[str] = None):
     """
     Return all the students data,
     Explicitly mention the columns in the sql query,
@@ -26,7 +27,7 @@ async def get_all_students():
     404 - for resource not found error,
     500 - for internal server error
     """
-    return await student_service.get_all_students()
+    return await student_service.get_all_students(age=age, gender=gender)
 
 
 @router.get("/{student_id}", response_model=StudentResponse)

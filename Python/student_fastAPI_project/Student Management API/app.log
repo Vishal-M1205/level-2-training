@@ -130,3 +130,35 @@ Traceback (most recent call last):
   File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
     raise ex.with_traceback(None)
 psycopg.errors.SyntaxError: cannot insert multiple commands into a prepared statement
+2026-10-08 17:08:09,121 : app.services.student_service : ERROR : syntax error at end of input
+LINE 9: 
+        ^
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 14, in get_all_students
+    return await student_repository.get_all_students(params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\student_repository.py", line 15, in get_all_students
+                    await cursor.execute(
+    ...<10 lines>...
+                    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.SyntaxError: syntax error at end of input
+LINE 9: 
+        ^
+2026-10-08 17:13:32,877 : app.services.student_service : ERROR : trailing junk after parameter at or near "$1ANDgender"
+LINE 8:   WHERE age = $1ANDgender = $2
+                      ^
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 14, in get_all_students
+    return await student_repository.get_all_students(params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\student_repository.py", line 19, in get_all_students
+                    await cursor.execute(
+    ...<10 lines>...
+                    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.SyntaxError: trailing junk after parameter at or near "$1ANDgender"
+LINE 8:   WHERE age = $1ANDgender = $2
+                      ^

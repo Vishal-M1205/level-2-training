@@ -2,18 +2,32 @@ from app.database import get_connection
 from app.schemas.student import StudentCreate, StudentUpdate
 
 
-async def get_all_students():
+async def get_all_students(params: dict):
+    query = ""
+    values = []
+    if params != {}:
+        fields = list(params.keys())
+        values = list(params.values())
+
+        query = [f"{x} = %s" for x in fields]
+        query = " AND ".join(query)
+        query = "WHERE " + query
+
     async with await get_connection() as connection:
         async with connection.cursor() as cursor:
-            await cursor.execute("""
+            await cursor.execute(
+                f"""
   SELECT 
   id,
   name,
   age,
   gender 
   FROM students
-""")
-            rows = await cursor.fetchall()  #! if no records found fetchall return [] not None
+  {query}
+""",
+                values,
+            )
+            rows = await cursor.fetchall()
             return rows
 
 
@@ -131,6 +145,3 @@ RETURNING id,name,age,gender;
             row = await cursor.fetchone()
 
             return row
-
-
-

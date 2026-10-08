@@ -7,9 +7,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-async def get_all_students():
+async def get_all_students(**kwargs):
     try:
-        return await student_repository.get_all_students()
+        params = {key: value for key, value in kwargs.items() if value is not None}
+
+        return await student_repository.get_all_students(params)
     except IntegrityError:
         raise HTTPException(status_code=409, detail="Integrity Error")
     except Exception as e:
@@ -99,7 +101,3 @@ async def patch_student(student_id: int, student: StudentPatch):
     except Exception as e:
         logger.exception(e)
         raise HTTPException(status_code=500, detail="Internal Server Error")
-
-
-
-
