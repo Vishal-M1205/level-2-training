@@ -150,3 +150,58 @@ ALTER TABLE marks
 ALTER TABLE grades 
   ADD CONSTRAINT fk_student_id FOREIGN KEY (student_id) 
   REFERENCES students(id);
+
+ALTER TABLE marks
+RENAME TO exam_marks;
+
+CREATE TABLE internal_marks (
+    id SERIAL PRIMARY KEY,
+    student_id INTEGER NOT NULL,
+    behaviour NUMERIC(5,2) NOT NULL,
+    seminar NUMERIC(5,2) NOT NULL,
+
+    CONSTRAINT fk_internal_marks_student
+        FOREIGN KEY (student_id)
+        REFERENCES students(id),
+
+    CONSTRAINT unique_internal_marks_student
+        UNIQUE (student_id),
+
+    CONSTRAINT check_behaviour_mark
+        CHECK (behaviour >= 0 AND behaviour <= 50),
+
+    CONSTRAINT check_seminar_mark
+        CHECK (seminar >= 0 AND seminar <= 50)
+);
+
+INSERT INTO internal_marks
+    (student_id, behaviour, seminar)
+VALUES
+    (1, 45, 42),
+    (2, 48, 46),
+    (3, 40, 44),
+    (4, 47, 48),
+    (5, 38, 40),
+    (6, 46, 45),
+    (7, 42, 39),
+    (8, 49, 47),
+    (9, 36, 41),
+    (10, 44, 46);
+
+ALTER TABLE exam_marks 
+ADD CONSTRAINT unique_marks_student_subject 
+UNIQUE (student_id,subject_id);
+
+SELECT  * FROM exam_marks;
+SELECT 
+st.id,
+st.name,
+sub.name,
+ex.mark 
+FROM exam_marks ex 
+JOIN students st 
+ON st.id = ex.student_id
+JOIN subjects sub
+ON sub.id = ex.subject_id 
+WHERE 
+st.id = 1;
