@@ -3,17 +3,20 @@ from app.schemas.student import StudentCreate, StudentUpdate
 import math
 
 
+def generate_query(params: dict, seperator: str) -> list:
+    fields = list(params.keys())
+
+    query = f"{seperator}".join([f"{x} = %s" for x in fields])
+    return query
+
+
 async def get_all_students(page: int, limit: int, offset: int, params: dict):
     query = ""
     values = []
     pagination = "LIMIT %s OFFSET %s"
     if params != {}:
-        fields = list(params.keys())
         values = tuple(params.values())
-
-        query = [f"{x} = %s" for x in fields]
-        query = " AND ".join(query)
-        query = "WHERE " + query
+        query = "WHERE " + generate_query(params, " AND ")
 
     async with await get_connection() as connection:
         async with connection.cursor() as cursor:
@@ -141,12 +144,9 @@ RETURNING id;
 
 
 async def patch_student(student_id: int, payload: dict):
-    fields = list(payload.keys())
     values = tuple(payload.values())
 
-    query = [f"{x} = %s" for x in fields]
-
-    query = ",".join(query)
+    query = generate_query(payload, ",")
 
     async with await get_connection() as connection:
         async with connection.cursor() as cursor:
