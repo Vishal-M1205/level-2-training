@@ -1,13 +1,15 @@
 from app.database import get_connection
 from app.schemas.student import StudentCreate, StudentUpdate
+import math
 
 
-async def get_all_students(params: dict):
+async def get_all_students(page: int, limit: int, offset: int, params: dict):
     query = ""
     values = []
+    pagination = "LIMIT %s OFFSET %s"
     if params != {}:
         fields = list(params.keys())
-        values = list(params.values())
+        values = tuple(params.values())
 
         query = [f"{x} = %s" for x in fields]
         query = " AND ".join(query)
@@ -24,11 +26,29 @@ async def get_all_students(params: dict):
   gender 
   FROM students
   {query}
+  {pagination}
+  
 """,
-                values,
+                (*values, limit, offset),
             )
             rows = await cursor.fetchall()
-            return rows
+
+            await cursor.execute("""
+SELECT 
+COUNT(*) as total_records 
+FROM students
+""")
+            total = await cursor.fetchone()
+            total_records = total["total_records"]
+            total_pages = math.ceil(total_records / limit)
+
+            return {
+                "students": rows,
+                "total": total_records,
+                "page": page,
+                "limit": limit,
+                "total_pages": total_pages,
+            }
 
 
 async def get_student_by_id(student_id: int):

@@ -20,6 +20,14 @@ class StudentResponse(BaseModel):
     gender: str = Field(max_length=1, examples=["M", "F"])
 
 
+class StudentListResponse(BaseModel):
+    students: list[StudentResponse]
+    total: int = Field(description="Total Student Records in the Database")
+    page: int = Field(description="Current Page")
+    limit: int = Field(description="Maximum Records requested")
+    total_pages: int = Field("Total available pages")
+
+
 class StudentCreate(BaseModel):
     name: str = Field(min_length=3)
     age: int = Field(ge=17, le=35)

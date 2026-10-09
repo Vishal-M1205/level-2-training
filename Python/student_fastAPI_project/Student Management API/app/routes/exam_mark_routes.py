@@ -7,7 +7,7 @@ from app.schemas.exam_mark import (
 )
 import app.services.exam_mark_service as exam_mark_service
 
-router = APIRouter(prefix="/exam-marks")
+router = APIRouter(prefix="/exam-marks", tags=["Exam Mark Management"])
 
 
 @router.get("/", response_model=list[ExamMarkResponse])

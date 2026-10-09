@@ -1,16 +1,19 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, Header, Response, Request, Query, UploadFile
+from app.core.config import config
 from app.schemas.result import ResultResponse
 from app.schemas.student import (
     StudentPatch,
     StudentResponse,
     StudentCreate,
     StudentUpdate,
+    StudentListResponse,
 )
 import app.services.student_service as student_service
 import app.services.result_service as result_service
 from typing import Optional
 
-router = APIRouter(prefix="/students")
+router = APIRouter(prefix="/students", tags=["Student Management"])
+#! tags - groups the endpoints in the docs
 
 
 #! As we are using dict_row now the value is validated with the Model and creates a object
@@ -18,8 +21,22 @@ router = APIRouter(prefix="/students")
 # * That JSON is sent to the Client by FastAPI
 
 
-@router.get("/", response_model=list[StudentResponse])
-async def get_all_students(age: Optional[int] = None, gender: Optional[str] = None):
+@router.post("/idcards")
+async def upload_student_id_card(file: UploadFile):
+    await student_service.upload_student_id_card(file)
+    return {"name": file.filename, "size": file.size}
+
+
+@router.get("/", response_model=StudentListResponse, summary="Gets all the students")
+async def get_all_students(
+    request: Request,
+    response: Response,
+    age: Optional[int] = None,
+    gender: Optional[str] = None,
+    page: int = Query(default=1, ge=1),
+    limit: int = Query(default=5, le=10),
+    user_agent: Optional[str] = Header(default=None),
+):
     """
     Return all the students data,
     Explicitly mention the columns in the sql query,
@@ -27,7 +44,20 @@ async def get_all_students(age: Optional[int] = None, gender: Optional[str] = No
     404 - for resource not found error,
     500 - for internal server error
     """
-    return await student_service.get_all_students(age=age, gender=gender)
+    print(
+        user_agent
+    )  #! getting the value from the headers - name should be same underscore converted to "-" and it is
+    #! case-insensitive
+
+    print(request.headers)  #! All the header value from the client
+    print(request.cookies)
+
+    response.headers["API-Name"] = config.app_name
+    response.headers["API-Version"] = config.app_version
+
+    #! Sending a header response
+
+    return await student_service.get_all_students(page, limit, age=age, gender=gender)
 
 
 @router.get("/{student_id}", response_model=StudentResponse)

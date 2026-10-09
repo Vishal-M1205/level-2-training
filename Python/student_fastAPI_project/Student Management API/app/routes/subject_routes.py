@@ -7,7 +7,7 @@ from app.schemas.subject import (
 )
 import app.services.subject_service as subject_service
 
-router = APIRouter(prefix="/subjects")
+router = APIRouter(prefix="/subjects", tags=["Subject Management"])
 
 
 @router.get("/", response_model=list[SubjectResponse])
@@ -44,6 +44,3 @@ async def delete_subject(subject_id: int):
 async def patch_subject(subject_id: int, subject: SubjectPatch):
     """Partially updates the Subject data by Subject ID"""
     return await subject_service.patch_subject(subject_id, subject)
-
-
-
