@@ -1,13 +1,7 @@
 from app.database import get_connection
 from app.schemas.student import StudentCreate, StudentUpdate
+from app.utils.query_utils import generate_query
 import math
-
-
-def generate_query(params: dict, seperator: str) -> list:
-    fields = list(params.keys())
-
-    query = f"{seperator}".join([f"{x} = %s" for x in fields])
-    return query
 
 
 async def get_all_students(page: int, limit: int, offset: int, params: dict):

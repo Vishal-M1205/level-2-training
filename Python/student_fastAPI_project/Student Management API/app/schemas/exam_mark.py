@@ -1,9 +1,12 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from typing import Optional
 from decimal import Decimal
 
 
 class ExamMarkResponse(BaseModel):
+
+    model_config = ConfigDict(extra="forbid")
+
     id: int = Field(description="ID is auto generated in postgres")
     student_id: int
     subject_id: int

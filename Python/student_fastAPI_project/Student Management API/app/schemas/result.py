@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 from decimal import Decimal
 
 
@@ -8,6 +8,9 @@ class SubjectMark(BaseModel):
 
 
 class ResultResponse(BaseModel):
+
+    model_config = ConfigDict(extra="forbid")
+
     student_id: int
     student_name: str
     subjects: list[SubjectMark]

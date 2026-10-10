@@ -168,3 +168,51 @@ Traceback (most recent call last):
     id_card_file_path = id_card_upload_directory / f"{uuid5()}.{extension}"
                                                       ~~~~~^^
 TypeError: uuid5() missing 2 required positional arguments: 'namespace' and 'name'
+2026-10-10 11:54:37,907 : app.services.student_service : ERROR : 'UploadFile' object has no attribute 'name'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 30, in upload_student_id_card
+    "original_filename": file.name,
+                         ^^^^^^^^^
+AttributeError: 'UploadFile' object has no attribute 'name'
+2026-10-10 11:56:12,405 : app.services.student_service : ERROR : 1 validation error for IdCardCreate
+file_path
+  Input should be a valid string [type=string_type, input_value=WindowsPath('uploads/20c2...8ccd-f92eb7f37b18..png'), input_type=WindowsPath]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 27, in upload_student_id_card
+    id_card_payload = IdCardCreate.model_validate(
+        {
+    ...<4 lines>...
+        }
+    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\pydantic\main.py", line 732, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        obj,
+        ^^^^
+    ...<5 lines>...
+        by_name=by_name,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for IdCardCreate
+file_path
+  Input should be a valid string [type=string_type, input_value=WindowsPath('uploads/20c2...8ccd-f92eb7f37b18..png'), input_type=WindowsPath]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+2026-10-10 12:38:10,015 : app.services.student_service : ERROR : column "student_id" does not exist
+LINE 6: student_id = $1, 
+        ^
+DETAIL:  There is a column named "student_id" in table "id_cards", but it cannot be referenced from this part of the query.
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 37, in upload_student_id_card
+    await id_card_repository.upload_student_id_card(id_card_payload)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\id_card_repository.py", line 8, in upload_student_id_card
+                await cursor.execute(
+    ...<18 lines>...
+                )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedColumn: column "student_id" does not exist
+LINE 6: student_id = $1, 
+        ^
+DETAIL:  There is a column named "student_id" in table "id_cards", but it cannot be referenced from this part of the query.

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, Cookie
 
 from app.utils.log import setup_logging
 from app.routes.student_routes import router as student_router

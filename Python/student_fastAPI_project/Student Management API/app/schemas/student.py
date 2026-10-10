@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, ConfigDict
 from typing import Optional
 
 """
@@ -14,6 +14,9 @@ No need now , beacuse already table is created in the postgres
 
 
 class StudentResponse(BaseModel):
+
+    model_config = ConfigDict(extra="forbid")
+
     id: int = Field(description="ID is auto generated in postgres")
     name: str = Field(min_length=3)
     age: int = Field(ge=17, le=35)
@@ -21,6 +24,9 @@ class StudentResponse(BaseModel):
 
 
 class StudentListResponse(BaseModel):
+
+    model_config = ConfigDict(extra="forbid")
+
     students: list[StudentResponse]
     total: int = Field(description="Total Student Records in the Database")
     page: int = Field(description="Current Page")
