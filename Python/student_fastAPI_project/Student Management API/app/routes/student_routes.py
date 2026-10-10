@@ -21,10 +21,9 @@ router = APIRouter(prefix="/students", tags=["Student Management"])
 # * That JSON is sent to the Client by FastAPI
 
 
-@router.post("/idcards")
-async def upload_student_id_card(file: UploadFile):
-    await student_service.upload_student_id_card(file)
-    return {"name": file.filename, "size": file.size}
+@router.post("/{student_id}/idcards")
+async def upload_student_id_card(student_id: int, file: UploadFile):
+    return await student_service.upload_student_id_card(student_id, file)
 
 
 @router.get("/", response_model=StudentListResponse, summary="Gets all the students")
