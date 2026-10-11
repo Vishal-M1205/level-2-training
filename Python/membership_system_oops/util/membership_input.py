@@ -1,3 +1,7 @@
+import logging
+
+logger = logging.getLogger(__name__)
+
 class MembershipInput:
 
     def __init__(self, validator):
@@ -10,4 +14,4 @@ class MembershipInput:
                 if self.validator.validate_membership_id(membership_id=membership_id):
                     return membership_id
             except Exception as e:
-                print(e)
+                logger.exception(e)

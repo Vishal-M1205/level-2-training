@@ -1,5 +1,6 @@
 from models.member import Member
 from models.membership import Membership
+import asyncio
 
 
 class Display:
@@ -101,3 +102,8 @@ Amount earned  : {amount}
     @staticmethod
     def show_error(error: Exception) -> None:
         print(f"Error: {error}")
+
+    @staticmethod
+    async def show_loading_text():
+        print("Processing...")
+        await asyncio.sleep(2)

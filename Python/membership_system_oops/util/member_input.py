@@ -1,11 +1,13 @@
+import logging
 from models.member import Member
 
+logger = logging.getLogger(__name__)
 
 class MemberInput:
 
-    def __init__(self, validator, config, membership_service):
+    def __init__(self, validator, cities, membership_service):
         self.validator = validator
-        self.config = config
+        self.cities = cities
         self.membership_service = membership_service
 
     def get_member_id(self) -> str:
@@ -15,7 +17,7 @@ class MemberInput:
                 self.validator.validate_id(member_id)
                 return member_id
             except ValueError as e:
-                print(e)
+                logger.exception(e)
 
     def get_member_name(self) -> str:
         while True:
@@ -24,7 +26,7 @@ class MemberInput:
                 self.validator.validate_name(name)
                 return name
             except ValueError as e:
-                print(e)
+                logger.exception(e)
 
     def get_member_mobile_no(self) -> str:
         while True:
@@ -33,7 +35,7 @@ class MemberInput:
                 self.validator.validate_phone(phone)
                 return phone
             except ValueError as e:
-                print(e)
+                logger.exception(e)
 
     def get_member_age(self) -> int:
         while True:
@@ -42,10 +44,10 @@ class MemberInput:
                 self.validator.validate_age(age)
                 return int(age)
             except ValueError as e:
-                print(e)
+                logger.exception(e)
 
     def get_member_city(self) -> str:
-        cities = self.config.cities
+        cities = self.cities
 
         while True:
             for i, city in enumerate(cities, start=1):
@@ -62,7 +64,9 @@ class MemberInput:
         plans = self.membership_service.get_membership_plans()
 
         if not plans:
-            raise ValueError("No membership plans available")
+            msg = "No membership plans available"
+            logger.error(msg)
+            raise ValueError(msg)
 
         while True:
             for i, plan in enumerate(plans, start=1):

@@ -1,0 +1,246 @@
+2026-10-07 10:16:37,482 : app.main : ERROR : query parameters should be a sequence or a mapping, got str
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\main.py", line 59, in get_student_by_id
+                    cursor.execute(
+                    ~~~~~~~~~~~~~~^
+                        """
+                        ^^^
+    ...<8 lines>...
+                        (student_id),
+                        ^^^^^^^^^^^^^
+                    )
+                    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor.py", line 113, in execute
+    self._conn.wait(
+    ~~~~~~~~~~~~~~~^
+        self._execute_gen(query, params, prepare=prepare, binary=binary)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\connection.py", line 495, in wait
+    return waiting.wait(
+           ~~~~~~~~~~~~^
+        gen, self.pgconn.socket, interval=interval, timeout=timeout
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\waiting.py", line 363, in wait_select
+    s = gen.send(ready)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_cursor_base.py", line 205, in _execute_gen
+    pgq = self._convert_query(query, params)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_cursor_base.py", line 465, in _convert_query
+    pgq.convert(query, params)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_queries.py", line 92, in convert
+    self.dump(vars)
+    ~~~~~~~~~^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_queries.py", line 101, in dump
+    params = self.validate_and_reorder_params(self._parts, vars, self._order)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_queries.py", line 138, in validate_and_reorder_params
+    if PostgresQuery.is_params_sequence(vars):
+       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_queries.py", line 124, in is_params_sequence
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: query parameters should be a sequence or a mapping, got str
+2026-10-07 22:41:31,858 : app.services.student_service : ERROR : the last operation didn't produce records (command status: UPDATE 1)
+Traceback (most recent call last):
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 76, in patch_student
+    return student_repository.patch_student(student_id, payload)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\repositories\student_repository.py", line 130, in patch_student
+    row = cursor.fetchone()
+          ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Vishal Manivannan\AppData\Local\Programs\Python\Python312\Lib\site-packages\psycopg\cursor.py", line 248, in fetchone
+    res = self._check_result_for_fetch()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Vishal Manivannan\AppData\Local\Programs\Python\Python312\Lib\site-packages\psycopg\_cursor_base.py", line 628, in _check_result_for_fetch
+    raise e.ProgrammingError(
+psycopg.ProgrammingError: the last operation didn't produce records (command status: UPDATE 1)
+2026-10-08 10:51:45,583 : app.services.subject_service : ERROR : 'int' object has no attribute 'name'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 19, in get_subject_by_id
+    subject = subject_repository.get_subject_by_id(subject_id)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 53, in get_subject_by_id
+    (subject.name,),
+     ^^^^^^^^^^^^
+AttributeError: 'int' object has no attribute 'name'
+2026-10-08 10:53:56,325 : app.services.subject_service : ERROR : the last operation didn't produce records (command status: UPDATE 1)
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 44, in update_subject
+    row = subject_repository.update_subject(subject_id, subject)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 75, in update_subject
+    row = cursor.fetchone()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor.py", line 248, in fetchone
+    res = self._check_result_for_fetch()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_cursor_base.py", line 628, in _check_result_for_fetch
+    raise e.ProgrammingError(
+        f"the last operation didn't produce records{detail}"
+    )
+psycopg.ProgrammingError: the last operation didn't produce records (command status: UPDATE 1)
+2026-10-08 14:34:58,641 : app.services.exam_mark_service : ERROR : duplicate key value violates unique constraint "unique_marks_student_subject"
+DETAIL:  Key (student_id, subject_id)=(1, 1) already exists.
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\exam_mark_service.py", line 34, in create_exam_mark
+    return await exam_mark_repository.create_exam_mark(exam_mark)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\exam_mark_repository.py", line 44, in create_exam_mark
+                await cursor.execute(
+    ...<8 lines>...
+                )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UniqueViolation: duplicate key value violates unique constraint "unique_marks_student_subject"
+DETAIL:  Key (student_id, subject_id)=(1, 1) already exists.
+2026-10-08 15:11:30,093 : app.services.result_service : ERROR : no result available
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\result_service.py", line 10, in get_student_exam_result_by_id
+    result = await result_repository.get_student_exam_result_by_id(student_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\result_repository.py", line 26, in get_student_exam_result_by_id
+    rows = await cursor.fetchall()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 283, in fetchall
+    res = self._check_result_for_fetch()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\_cursor_base.py", line 611, in _check_result_for_fetch
+    raise e.ProgrammingError("no result available")
+psycopg.ProgrammingError: no result available
+2026-10-08 15:11:48,877 : app.services.result_service : ERROR : cannot insert multiple commands into a prepared statement
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\result_service.py", line 10, in get_student_exam_result_by_id
+    result = await result_repository.get_student_exam_result_by_id(student_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\result_repository.py", line 7, in get_student_exam_result_by_id
+                await cursor.execute(
+    ...<16 lines>...
+                )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.SyntaxError: cannot insert multiple commands into a prepared statement
+2026-10-08 15:11:54,344 : app.services.result_service : ERROR : cannot insert multiple commands into a prepared statement
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\result_service.py", line 10, in get_student_exam_result_by_id
+    result = await result_repository.get_student_exam_result_by_id(student_id)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\result_repository.py", line 7, in get_student_exam_result_by_id
+                await cursor.execute(
+    ...<16 lines>...
+                )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.SyntaxError: cannot insert multiple commands into a prepared statement
+2026-10-08 17:08:09,121 : app.services.student_service : ERROR : syntax error at end of input
+LINE 9: 
+        ^
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 14, in get_all_students
+    return await student_repository.get_all_students(params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\student_repository.py", line 15, in get_all_students
+                    await cursor.execute(
+    ...<10 lines>...
+                    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.SyntaxError: syntax error at end of input
+LINE 9: 
+        ^
+2026-10-08 17:13:32,877 : app.services.student_service : ERROR : trailing junk after parameter at or near "$1ANDgender"
+LINE 8:   WHERE age = $1ANDgender = $2
+                      ^
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 14, in get_all_students
+    return await student_repository.get_all_students(params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\student_repository.py", line 19, in get_all_students
+                    await cursor.execute(
+    ...<10 lines>...
+                    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.SyntaxError: trailing junk after parameter at or near "$1ANDgender"
+LINE 8:   WHERE age = $1ANDgender = $2
+                      ^
+2026-10-09 18:08:50,882 : app.services.student_service : ERROR : uuid5() missing 2 required positional arguments: 'namespace' and 'name'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 24, in upload_student_id_card
+    id_card_file_path = id_card_upload_directory / f"{uuid5()}.{extension}"
+                                                      ~~~~~^^
+TypeError: uuid5() missing 2 required positional arguments: 'namespace' and 'name'
+2026-10-10 11:54:37,907 : app.services.student_service : ERROR : 'UploadFile' object has no attribute 'name'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 30, in upload_student_id_card
+    "original_filename": file.name,
+                         ^^^^^^^^^
+AttributeError: 'UploadFile' object has no attribute 'name'
+2026-10-10 11:56:12,405 : app.services.student_service : ERROR : 1 validation error for IdCardCreate
+file_path
+  Input should be a valid string [type=string_type, input_value=WindowsPath('uploads/20c2...8ccd-f92eb7f37b18..png'), input_type=WindowsPath]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 27, in upload_student_id_card
+    id_card_payload = IdCardCreate.model_validate(
+        {
+    ...<4 lines>...
+        }
+    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\pydantic\main.py", line 732, in model_validate
+    return cls.__pydantic_validator__.validate_python(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        obj,
+        ^^^^
+    ...<5 lines>...
+        by_name=by_name,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+pydantic_core._pydantic_core.ValidationError: 1 validation error for IdCardCreate
+file_path
+  Input should be a valid string [type=string_type, input_value=WindowsPath('uploads/20c2...8ccd-f92eb7f37b18..png'), input_type=WindowsPath]
+    For further information visit https://errors.pydantic.dev/2.13/v/string_type
+2026-10-10 12:38:10,015 : app.services.student_service : ERROR : column "student_id" does not exist
+LINE 6: student_id = $1, 
+        ^
+DETAIL:  There is a column named "student_id" in table "id_cards", but it cannot be referenced from this part of the query.
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 37, in upload_student_id_card
+    await id_card_repository.upload_student_id_card(id_card_payload)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\id_card_repository.py", line 8, in upload_student_id_card
+                await cursor.execute(
+    ...<18 lines>...
+                )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedColumn: column "student_id" does not exist
+LINE 6: student_id = $1, 
+        ^
+DETAIL:  There is a column named "student_id" in table "id_cards", but it cannot be referenced from this part of the query.
+2026-10-11 13:53:14,256 : app.services.result_service : ERROR : relation "exam_marks" does not exist
+LINE 7: FROM exam_marks ex 
+             ^
+Traceback (most recent call last):
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\services\result_service.py", line 16, in get_student_exam_result_by_id
+    marks = await self.repository.get_student_exam_result_by_id(student_id)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\repositories\result_repository.py", line 12, in get_student_exam_result_by_id
+    await cursor.execute(
+  File "C:\Users\Vishal Manivannan\AppData\Local\Programs\Python\Python312\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "exam_marks" does not exist
+LINE 7: FROM exam_marks ex 
+             ^
+2026-10-11 13:58:59,307 : app.services.id_card_service : ERROR : relation "id_cards" does not exist
+LINE 3: id_cards (student_id, original_filename, stored_filename, fi...
+        ^
+Traceback (most recent call last):
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\services\id_card_service.py", line 41, in upload_student_id_card
+    id_card = await self.repository.upload_student_id_card(id_card_payload)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\repositories\id_card_repository.py", line 12, in upload_student_id_card
+    await cursor.execute(
+  File "C:\Users\Vishal Manivannan\AppData\Local\Programs\Python\Python312\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "id_cards" does not exist
+LINE 3: id_cards (student_id, original_filename, stored_filename, fi...
+        ^

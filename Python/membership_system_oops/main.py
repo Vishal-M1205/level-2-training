@@ -1,6 +1,9 @@
-from core.config import config
+import logging
+import asyncio
+from core.config import members_file, memberships_file, cities
 
-from repositories.json_repository import JsonRepository
+
+from repositories.csv_repository import CSVRepository
 from repositories.member_repository import MemberRepository
 from repositories.membership_repository import MembershipRepository
 
@@ -13,22 +16,26 @@ from validators.membership_validator import MembershipValidator
 from util.member_input import MemberInput
 from util.membership_input import MembershipInput
 from util.display import Display
+from util.log import setup_logger
+from util.member_report import MemberReport
 
-from exceptions.membership_exception import MembershipException
+logger = logging.getLogger(__name__)
 
 
-def main() -> None:
+async def main() -> None:
 
-    json_repository = JsonRepository()
+    csv_repository = CSVRepository()
+
+    setup_logger()
 
     member_repository = MemberRepository(
-        filepath=config.members_file,
-        json_repository=json_repository,
+        filepath=members_file,
+        data_repository=csv_repository,
     )
 
     membership_repository = MembershipRepository(
-        filepath=config.memberships_file,
-        json_repository=json_repository,
+        filepath=memberships_file,
+        data_repository=csv_repository,
     )
 
     member_service = MemberService(
@@ -44,12 +51,13 @@ def main() -> None:
 
     member_input = MemberInput(
         validator=member_validator,
-        config=config,
+        cities=cities,
         membership_service=membership_service,
     )
 
     membership_validator = MembershipValidator()
     membership_input = MembershipInput(validator=membership_validator)
+    member_report = MemberReport(member_service)
 
     while True:
 
@@ -68,7 +76,8 @@ def main() -> None:
 8. Top 3 Membership Plan
 9. Membership Plans below 3000
 10. Search Membership Plan
-11. Exit
+11. Generate Member Details Report
+12. Exit
 """)
 
         option = input("Enter your option: ").strip()
@@ -85,6 +94,8 @@ def main() -> None:
 
             elif option == "2":
 
+                await Display.show_loading_text()
+
                 memberships = membership_service.get_membership_plans()
 
                 Display.show_membership_plans(memberships)
@@ -98,6 +109,8 @@ def main() -> None:
                 Display.show_member(member)
 
             elif option == "4":
+
+                await Display.show_loading_text()
 
                 members = member_service.get_all_members()
 
@@ -117,6 +130,8 @@ def main() -> None:
 
             elif option == "6":
 
+                await Display.show_loading_text()
+
                 counts = membership_service.count_members_in_membership()
 
                 memberships = membership_service.get_membership_plans()
@@ -127,6 +142,8 @@ def main() -> None:
                 )
 
             elif option == "7":
+
+                await Display.show_loading_text()
 
                 revenue = membership_service.calculate_amount_earned()
 
@@ -151,15 +168,18 @@ def main() -> None:
                 Display.show_membership_plans([result])
 
             elif option == "11":
+                member_report.generate_member_details_report()
+
+            elif option == "12":
                 break
 
             else:
                 print("Invalid option. Please try again.")
 
         except Exception as error:
-
+            logger.exception(error)
             Display.show_error(error)
 
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())

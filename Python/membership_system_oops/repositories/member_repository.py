@@ -1,19 +1,23 @@
+import logging
 from pathlib import Path
 
 from models.member import Member
 from repositories.json_repository import JsonRepository
+from repositories.csv_repository import CSVRepository
+
+logger = logging.getLogger(__name__)
 
 
 class MemberRepository:
 
-    def __init__(self, filepath: Path, json_repository: JsonRepository):
+    def __init__(self, filepath: Path, data_repository: JsonRepository | CSVRepository):
         self.filepath = filepath
-        self.json_repository = json_repository
+        self.data_repository = data_repository
 
     def get_all(self) -> list[Member]:
-        data = self.json_repository.read(self.filepath)
+        data = self.data_repository.read(self.filepath)
 
-        return [Member(**member) for member in data]
+        return [Member.model_validate(member) for member in data]
 
     def get_by_id(self, member_id: str) -> Member | None:
         members = self.get_all()
@@ -38,19 +42,11 @@ class MemberRepository:
                 self.save_all(members)
                 return
 
-        raise ValueError(f"Member with ID {updated_member.member_id} not found")
+        msg = f"Member with ID {updated_member.member_id} not found"
+        logger.error(msg)
+        raise ValueError(msg)
 
     def save_all(self, members: list[Member]) -> None:
-        data = [
-            {
-                "member_id": member.member_id,
-                "name": member.name,
-                "phone": member.phone,
-                "age": member.age,
-                "city": member.city,
-                "membership_id": member.membership_id,
-            }
-            for member in members
-        ]
+        data = [member.model_dump() for member in members]
 
-        self.json_repository.write(self.filepath, data)
+        self.data_repository.write(self.filepath, data)
