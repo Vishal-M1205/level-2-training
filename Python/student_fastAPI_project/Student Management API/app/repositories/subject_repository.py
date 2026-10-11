@@ -1,4 +1,4 @@
-from app.database import get_connection
+from psycopg import AsyncConnection
 from app.schemas.subject import SubjectCreate, SubjectUpdate
 
 """
@@ -7,9 +7,13 @@ connection.cursor() is just returning the coroutine curo object so no await need
 """
 
 
-async def get_all_subjects():
-    async with await get_connection() as connection:
-        async with connection.cursor() as cursor:
+class SubjectRepository:
+
+    def __init__(self, connection: AsyncConnection):
+        self.connection = connection
+
+    async def get_all_subjects(self):
+        async with self.connection.cursor() as cursor:
             await cursor.execute("""
 SELECT
 id,  
@@ -22,10 +26,8 @@ subjects;
 
             return rows
 
-
-async def get_subject_by_id(subject_id: int):
-    async with await get_connection() as connection:
-        async with connection.cursor() as cursor:
+    async def get_subject_by_id(self, subject_id: int):
+        async with self.connection.cursor() as cursor:
             await cursor.execute(
                 """
 SELECT 
@@ -43,10 +45,8 @@ id = %s
 
             return row
 
-
-async def create_subject(subject: SubjectCreate):
-    async with await get_connection() as connection:
-        async with connection.cursor() as cursor:
+    async def create_subject(self, subject: SubjectCreate):
+        async with self.connection.cursor() as cursor:
             await cursor.execute(
                 """
 INSERT INTO
@@ -62,10 +62,8 @@ RETURNING id, name;
 
             return row
 
-
-async def update_subject(subject_id: int, subject: SubjectUpdate):
-    async with await get_connection() as connection:
-        async with connection.cursor() as cursor:
+    async def update_subject(self, subject_id: int, subject: SubjectUpdate):
+        async with self.connection.cursor() as cursor:
             await cursor.execute(
                 """
 UPDATE subjects
@@ -82,17 +80,15 @@ RETURNING id,name;
 
             return row
 
+    async def patch_subject(self, subject_id: int, payload: dict):
+        fields = list(payload.keys())
+        values = tuple(payload.values())
 
-async def patch_subject(subject_id, payload: dict):
-    fields = list(payload.keys())
-    values = tuple(payload.values())
+        query = [f"{x} = %s" for x in fields]
 
-    query = [f"{x} = %s" for x in fields]
+        query = ",".join(query)
 
-    query = ",".join(query)
-
-    async with await get_connection() as connection:
-        async with connection.cursor() as cursor:
+        async with self.connection.cursor() as cursor:
             await cursor.execute(
                 f"""
 UPDATE subjects
@@ -109,10 +105,8 @@ RETURNING id,name;
 
             return row
 
-
-async def delete_subject(subject_id: int):
-    async with await get_connection() as connection:
-        async with connection.cursor() as cursor:
+    async def delete_subject(self, subject_id: int):
+        async with self.connection.cursor() as cursor:
             await cursor.execute(
                 """
 DELETE 

@@ -216,3 +216,31 @@ psycopg.errors.UndefinedColumn: column "student_id" does not exist
 LINE 6: student_id = $1, 
         ^
 DETAIL:  There is a column named "student_id" in table "id_cards", but it cannot be referenced from this part of the query.
+2026-10-11 13:53:14,256 : app.services.result_service : ERROR : relation "exam_marks" does not exist
+LINE 7: FROM exam_marks ex 
+             ^
+Traceback (most recent call last):
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\services\result_service.py", line 16, in get_student_exam_result_by_id
+    marks = await self.repository.get_student_exam_result_by_id(student_id)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\repositories\result_repository.py", line 12, in get_student_exam_result_by_id
+    await cursor.execute(
+  File "C:\Users\Vishal Manivannan\AppData\Local\Programs\Python\Python312\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "exam_marks" does not exist
+LINE 7: FROM exam_marks ex 
+             ^
+2026-10-11 13:58:59,307 : app.services.id_card_service : ERROR : relation "id_cards" does not exist
+LINE 3: id_cards (student_id, original_filename, stored_filename, fi...
+        ^
+Traceback (most recent call last):
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\services\id_card_service.py", line 41, in upload_student_id_card
+    id_card = await self.repository.upload_student_id_card(id_card_payload)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\WORK\level-2-training\Python\student_fastAPI_project\Student Management API\app\repositories\id_card_repository.py", line 12, in upload_student_id_card
+    await cursor.execute(
+  File "C:\Users\Vishal Manivannan\AppData\Local\Programs\Python\Python312\Lib\site-packages\psycopg\cursor_async.py", line 117, in execute
+    raise ex.with_traceback(None)
+psycopg.errors.UndefinedTable: relation "id_cards" does not exist
+LINE 3: id_cards (student_id, original_filename, stored_filename, fi...
+        ^

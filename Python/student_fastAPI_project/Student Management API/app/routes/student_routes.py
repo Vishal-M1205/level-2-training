@@ -1,5 +1,15 @@
-from fastapi import APIRouter, status, Header, Response, Request, Query, UploadFile
+from fastapi import (
+    APIRouter,
+    status,
+    Header,
+    Response,
+    Request,
+    Query,
+    UploadFile,
+    Depends,
+)
 from app.core.config import config
+from app.core.types import StudentID
 from app.schemas.result import ResultResponse
 from app.schemas.student import (
     StudentPatch,
@@ -8,9 +18,15 @@ from app.schemas.student import (
     StudentUpdate,
     StudentListResponse,
 )
-import app.services.student_service as student_service
-import app.services.result_service as result_service
-from typing import Optional
+from app.services.student_service import StudentService
+from app.services.result_service import ExamResultService
+from app.services.id_card_service import IdCardService
+from app.dependencies import (
+    get_exam_result_service,
+    get_student_service,
+    get_id_card_service,
+)
+from typing import Optional, Annotated
 
 router = APIRouter(prefix="/students", tags=["Student Management"])
 #! tags - groups the endpoints in the docs
@@ -20,16 +36,14 @@ router = APIRouter(prefix="/students", tags=["Student Management"])
 #! If the validation passes then the object is deserialized to  a JSON data
 # * That JSON is sent to the Client by FastAPI
 
-
-@router.post("/{student_id}/idcards")
-async def upload_student_id_card(student_id: int, file: UploadFile):
-    return await student_service.upload_student_id_card(student_id, file)
+#! For repeated type hits or dependencies we can write Annotated
 
 
 @router.get("/", response_model=StudentListResponse, summary="Gets all the students")
 async def get_all_students(
     request: Request,
     response: Response,
+    service: Annotated[StudentService, Depends(get_student_service)],
     age: Optional[int] = None,
     gender: Optional[str] = None,
     page: int = Query(default=1, ge=1),
@@ -56,14 +70,17 @@ async def get_all_students(
 
     #! Sending a header response
 
-    return await student_service.get_all_students(page, limit, age=age, gender=gender)
+    return await service.get_all_students(page, limit, age=age, gender=gender)
 
 
 @router.get("/{student_id}", response_model=StudentResponse)
-async def get_student_by_id(student_id: int):
+async def get_student_by_id(
+    student_id: StudentID,
+    service: Annotated[StudentService, Depends(get_student_service)],
+):
     """GET student data using id (path parameter)"""
 
-    return await student_service.get_student_by_id(student_id)
+    return await service.get_student_by_id(student_id)
 
 
 """
@@ -82,30 +99,56 @@ send back the newly created data.
 
 
 @router.post("/", response_model=StudentResponse, status_code=status.HTTP_201_CREATED)
-async def create_student(student: StudentCreate):
+async def create_student(
+    student: StudentCreate,
+    service: Annotated[StudentService, Depends(get_student_service)],
+):
     """Creates a new Student Data"""
-    return await student_service.create_student(student)
+    return await service.create_student(student)
 
 
 @router.put("/{student_id}", response_model=StudentResponse)
-async def update_student(student_id: int, student: StudentUpdate):
+async def update_student(
+    student_id: StudentID,
+    student: StudentUpdate,
+    service: Annotated[StudentService, Depends(get_student_service)],
+):
     """Updates the exisitng Student data by Student ID"""
-    return await student_service.update_student(student_id, student)
+    return await service.update_student(student_id, student)
 
 
 @router.delete("/{student_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def delete_student(student_id: int):
+async def delete_student(
+    student_id: StudentID,
+    service: Annotated[StudentService, Depends(get_student_service)],
+):
     """Deletes the Student data by Student ID , return no body"""
-    await student_service.delete_student(student_id)
+    await service.delete_student(student_id)
 
 
 @router.patch("/{student_id}", response_model=StudentResponse)
-async def patch_student(student_id: int, student: StudentPatch):
+async def patch_student(
+    student_id: StudentID,
+    student: StudentPatch,
+    service: Annotated[StudentService, Depends(get_student_service)],
+):
     """Modifies the data based on the field values"""
-    return await student_service.patch_student(student_id, student)
+    return await service.patch_student(student_id, student)
 
 
 @router.get("/{student_id}/results", response_model=ResultResponse)
-async def get_student_exam_result_by_id(student_id: int):
+async def get_student_exam_result_by_id(
+    student_id: StudentID,
+    service: Annotated[ExamResultService, Depends(get_exam_result_service)],
+):
     """Returns the exam result consist of marks, total and grade"""
-    return await result_service.get_student_exam_result_by_id(student_id)
+    return await service.get_student_exam_result_by_id(student_id)
+
+
+@router.post("/{student_id}/idcards")
+async def upload_student_id_card(
+    student_id: StudentID,
+    file: UploadFile,
+    service: Annotated[IdCardService, Depends(get_id_card_service)],
+):
+    return await service.upload_student_id_card(student_id, file)

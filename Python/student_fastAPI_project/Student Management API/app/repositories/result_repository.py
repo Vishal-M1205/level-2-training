@@ -1,9 +1,14 @@
-from app.database import get_connection
+from psycopg import AsyncConnection
 
 
-async def get_student_exam_result_by_id(student_id: int):
-    async with await get_connection() as connection:
-        async with connection.cursor() as cursor:
+class ExamResultRepository:
+
+    def __init__(self, connection: AsyncConnection):
+        self.connection = connection
+
+    async def get_student_exam_result_by_id(self, student_id: int):
+
+        async with self.connection.cursor() as cursor:
             await cursor.execute(
                 """
 SELECT 

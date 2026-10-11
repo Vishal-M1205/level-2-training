@@ -1,10 +1,14 @@
-from app.database import get_connection
+from psycopg import AsyncConnection
 from app.schemas.id_card import IdCardCreate
 
 
-async def upload_student_id_card(id_card: IdCardCreate):
-    async with await get_connection() as connection:
-        async with connection.cursor() as cursor:
+class IdCardRepository:
+
+    def __init__(self, connection: AsyncConnection):
+        self.connection = connection
+
+    async def upload_student_id_card(self, id_card: IdCardCreate):
+        async with self.connection.cursor() as cursor:
             await cursor.execute(
                 """
 INSERT INTO 
