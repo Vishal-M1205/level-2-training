@@ -21,6 +21,14 @@ class IdCardService:
             if file.size > (1024 * 1024) * 10:
                 raise HTTPException(status_code=status.HTTP_413_CONTENT_TOO_LARGE)
 
+            supported_fileformat = [".png", ".jpg", ".jpeg"]
+
+            if Path(file.filename).suffix not in supported_fileformat:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Unsupported file format, supported fileformats are {",".join(supported_fileformat)}",
+                )
+
             id_card_file_path = generate_file_path(file, "uploads")
 
             stored_filename = Path(id_card_file_path).name
