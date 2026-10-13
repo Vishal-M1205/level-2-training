@@ -14,10 +14,15 @@ AsyncConnection where the connection() starts when the application run ,
 and the connection get closed when the app closes.
 No connectuion is closed after a specific request (repository request) , either it stays idle until other request comes
 
+conninfo takes db string 
+
 wait = True - app starts only when (min_sizze refers to the) connnection 
 get started
 
 connection grows until max_size 
+
+open = False - means we  use open(wait=True) , for that the connection need not be init when the pool
+object is created 
 """
 pool = AsyncConnectionPool(
     conninfo="",

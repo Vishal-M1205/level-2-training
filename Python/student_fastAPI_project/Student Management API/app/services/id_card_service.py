@@ -33,9 +33,10 @@ class IdCardService:
 
             stored_filename = Path(id_card_file_path).name
 
+            file_content = await file.read()
+
             async with aiofiles.open(id_card_file_path, "wb") as id_card_file:
-                while chunk := await file.read(1024 * 1024):
-                    await id_card_file.write(chunk)
+                await id_card_file.write(file_content)
 
             id_card_payload = IdCardCreate.model_validate(
                 {

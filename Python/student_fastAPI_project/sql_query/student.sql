@@ -205,3 +205,4 @@ JOIN subjects sub
 ON sub.id = ex.subject_id 
 WHERE 
 st.id = 1;
+
