@@ -4,28 +4,31 @@ from app.schemas.id_card import IdCardCreate
 from app.repositories.student_repository import StudentRepository
 from fastapi import HTTPException, status, Cookie
 from app.core.types import StudentID
+from sqlalchemy.ext.asyncio import AsyncSession
 import logging
 
 
 class StudentService:
-    def __init__(self, repository: StudentRepository):
+    def __init__(self, repository: StudentRepository, session: AsyncSession):
         self.logger = logging.getLogger(__name__)
         self.repository = repository
+        self.session = session
 
     async def get_all_students(self, page: int, limit: int, **kwargs):
-        try:
-            query_params = {
-                key: value for key, value in kwargs.items() if value is not None
-            }
-            offset = (page - 1) * limit
-            return await self.repository.get_all_students(
-                page, limit, offset, query_params
-            )
-        except IntegrityError:
-            raise HTTPException(status_code=409, detail="Integrity Error")
-        except Exception as e:
-            self.logger.exception(e)
-            raise HTTPException(status_code=500, detail="Internal Server Error")
+        async with self.session.begin():
+            try:
+                query_params = {
+                    key: value for key, value in kwargs.items() if value is not None
+                }
+                offset = (page - 1) * limit
+                return await self.repository.get_all_students(
+                    page, limit, offset, query_params
+                )
+            except IntegrityError:
+                raise HTTPException(status_code=409, detail="Integrity Error")
+            except Exception as e:
+                self.logger.exception(e)
+                raise HTTPException(status_code=500, detail="Internal Server Error")
 
     async def get_student_by_id(self, student_id: StudentID):
         try:

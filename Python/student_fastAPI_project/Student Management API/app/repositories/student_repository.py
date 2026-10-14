@@ -1,5 +1,6 @@
-from psycopg import AsyncConnection
-
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select, func
+from app.models.student import Student
 from app.schemas.student import StudentCreate, StudentUpdate
 from app.utils.query_utils import QueryUtil
 import math
@@ -7,68 +8,42 @@ import math
 
 class StudentRepository:
 
-    def __init__(self, util: QueryUtil, connection: AsyncConnection):
+    def __init__(self, util: QueryUtil, session: AsyncSession):
         self.util = util
-        self.connection = connection
+        self.session = session
 
     async def get_all_students(self, page: int, limit: int, offset: int, params: dict):
-        query = ""
-        values = []
-        pagination = "LIMIT %s OFFSET %s"
-        if params != {}:
-            values = tuple(params.values())
-            query = "WHERE " + self.util.generate_query(params, " AND ")
+        query = select(Student)
 
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(
-                f"""
-    SELECT 
-    id,
-    name,
-    age,
-    gender 
-    FROM students
-    {query}
-    {pagination}
-    
-    """,
-                (*values, limit, offset),
-            )
-            rows = await cursor.fetchall()
+        for field, values in params.items():
+            query = query.where(getattr(Student, field) == values)
 
-            await cursor.execute("""
-    SELECT 
-    COUNT(*) as total_records 
-    FROM students
-    """)
-            total = await cursor.fetchone()
-            total_records = total["total_records"]
-            total_pages = math.ceil(total_records / limit)
+        query = query.limit(limit).offset(offset)
 
-            return {
-                "students": rows,
-                "total": total_records,
-                "page": page,
-                "limit": limit,
-                "total_pages": total_pages,
-            }
+        rows = await self.session.execute(query)
+        rows = rows.scalars().all()
+
+        query = select(func.count()).select_from(Student)
+
+        for field, values in params.items():
+            query = query.where(getattr(Student, field) == values)
+
+        total_records = await self.session.execute(query)
+        total_records = total_records.scalar()
+
+        total_pages = math.ceil(total_records / limit)
+
+        return {
+            "students": rows,
+            "total": total_records,
+            "page": page,
+            "limit": limit,
+            "total_pages": total_pages,
+        }
 
     async def get_student_by_id(self, student_id: int):
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(
-                """
-    SELECT 
-    id,
-    name,
-    age,
-    gender 
-    FROM students
-    WHERE id = %s
-    """,
-                (student_id,),
-            )
-            row = await cursor.fetchone()  #! fetchone return None
-            return row
+        row = await self.session.get(Student, student_id)
+        return row
 
     """
     In the create_student , no need for connection.commit()/rollback()

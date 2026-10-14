@@ -284,3 +284,255 @@ Multiple connection attempts failed. All failures were:
 Multiple connection attempts failed. All failures were:
 - host: 'localhost', port: 5432, hostaddr: '::1': connection failed: connection to server at "::1", port 5432 failed: FATAL:  password authentication failed for user "postgres"
 - host: 'localhost', port: 5432, hostaddr: '127.0.0.1': connection failed: connection to server at "127.0.0.1", port 5432 failed: FATAL:  password authentication failed for user "postgres"
+2026-10-14 11:07:14,574 : app.services.subject_service : ERROR : 'coroutine' object has no attribute 'first'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 29, in get_subject_by_id
+    subject = await self.repository.get_subject_by_id(subject_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 25, in get_subject_by_id
+    row = await self.session.scalars(stmnt).first()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'coroutine' object has no attribute 'first'
+2026-10-14 11:08:36,096 : app.services.subject_service : ERROR : 'coroutine' object has no attribute 'first'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 29, in get_subject_by_id
+    subject = await self.repository.get_subject_by_id(subject_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 25, in get_subject_by_id
+    row = await self.session.scalars(stmnt).first()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'coroutine' object has no attribute 'first'
+2026-10-14 11:09:57,742 : app.services.subject_service : ERROR : 'Subject' object can't be awaited
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 29, in get_subject_by_id
+    subject = await self.repository.get_subject_by_id(subject_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 27, in get_subject_by_id
+    return await row.scalars().first()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'Subject' object can't be awaited
+2026-10-14 11:21:26,543 : app.services.subject_service : ERROR : 'coroutine' object has no attribute 'first'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 29, in get_subject_by_id
+    subject = await self.repository.get_subject_by_id(subject_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 25, in get_subject_by_id
+    row = await self.session.scalars(stmnt).first()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'coroutine' object has no attribute 'first'
+2026-10-14 11:21:31,954 : app.services.subject_service : ERROR : 'coroutine' object has no attribute 'first'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 29, in get_subject_by_id
+    subject = await self.repository.get_subject_by_id(subject_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 25, in get_subject_by_id
+    row = await self.session.scalars(stmnt).first()
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'coroutine' object has no attribute 'first'
+2026-10-14 15:51:54,485 : app.services.subject_service : ERROR : Class 'builtins.NoneType' is not mapped
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 74, in delete_subject
+    row = await self.repository.delete_subject(subject_id)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 64, in delete_subject
+    await self.session.delete(row)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 973, in delete
+    await greenlet_spawn(self.sync_session.delete, instance)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\util\concurrency.py", line 199, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 3674, in delete
+    self._delete_impl(object_state(instance), instance, head=True)
+                      ~~~~~~~~~~~~^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\base.py", line 441, in object_state
+    raise exc.UnmappedInstanceError(instance)
+sqlalchemy.orm.exc.UnmappedInstanceError: Class 'builtins.NoneType' is not mapped
+2026-10-14 15:57:01,833 : app.services.subject_service : ERROR : Instance '<Subject at 0x221869c6900>' is not persistent within this Session
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 45, in create_subject
+    return await self.repository.create_subject(subject)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 34, in create_subject
+    await self.session.refresh(row)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 531, in refresh
+    await greenlet_spawn(
+    ...<4 lines>...
+    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\util\concurrency.py", line 199, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 3282, in refresh
+    self._expire_state(state, attribute_names)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 3408, in _expire_state
+    self._validate_persistent(state)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 4320, in _validate_persistent
+    raise sa_exc.InvalidRequestError(
+    ...<2 lines>...
+    )
+sqlalchemy.exc.InvalidRequestError: Instance '<Subject at 0x221869c6900>' is not persistent within this Session
+2026-10-14 15:58:13,789 : app.services.subject_service : ERROR : Can't operate on closed transaction inside context manager.  Please complete the context manager before emitting further commands.
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 45, in create_subject
+    return await self.repository.create_subject(subject)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 34, in create_subject
+    await self.session.refresh(row)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 531, in refresh
+    await greenlet_spawn(
+    ...<4 lines>...
+    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\util\concurrency.py", line 199, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 3303, in refresh
+    loading._load_on_ident(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<10 lines>...
+        is_user_refresh=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\loading.py", line 518, in _load_on_ident
+    return _load_on_pk_identity(
+        session,
+    ...<11 lines>...
+        is_user_refresh=is_user_refresh,
+    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\loading.py", line 702, in _load_on_pk_identity
+    session.execute(
+    ~~~~~~~~~~~~~~~^
+        q,
+        ^^
+    ...<2 lines>...
+        bind_arguments=bind_arguments,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2473, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2350, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2168, in _connection_for_bind
+    TransactionalContext._trans_ctx_check(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\util.py", line 101, in _trans_ctx_check
+    raise exc.InvalidRequestError(
+    ...<10 lines>...
+    )
+sqlalchemy.exc.InvalidRequestError: Can't operate on closed transaction inside context manager.  Please complete the context manager before emitting further commands.
+2026-10-14 15:58:21,358 : app.services.subject_service : ERROR : Can't operate on closed transaction inside context manager.  Please complete the context manager before emitting further commands.
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\subject_service.py", line 45, in create_subject
+    return await self.repository.create_subject(subject)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\subject_repository.py", line 34, in create_subject
+    await self.session.refresh(row)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 531, in refresh
+    await greenlet_spawn(
+    ...<4 lines>...
+    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\util\concurrency.py", line 199, in greenlet_spawn
+    result = context.switch(*args, **kwargs)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 3303, in refresh
+    loading._load_on_ident(
+    ~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<10 lines>...
+        is_user_refresh=True,
+        ^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\loading.py", line 518, in _load_on_ident
+    return _load_on_pk_identity(
+        session,
+    ...<11 lines>...
+        is_user_refresh=is_user_refresh,
+    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\loading.py", line 702, in _load_on_pk_identity
+    session.execute(
+    ~~~~~~~~~~~~~~~^
+        q,
+        ^^
+    ...<2 lines>...
+        bind_arguments=bind_arguments,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2473, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2350, in _execute_internal
+    conn = self._connection_for_bind(bind)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2168, in _connection_for_bind
+    TransactionalContext._trans_ctx_check(self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\util.py", line 101, in _trans_ctx_check
+    raise exc.InvalidRequestError(
+    ...<10 lines>...
+    )
+sqlalchemy.exc.InvalidRequestError: Can't operate on closed transaction inside context manager.  Please complete the context manager before emitting further commands.
+2026-10-14 17:04:52,456 : app.services.student_service : ERROR : FROM expression, such as a Table or alias() object expected, got Column('id', Integer(), table=<students>, primary_key=True, nullable=False) object resolved from <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x0000027CD41DCFE0> object.
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\student_service.py", line 24, in get_all_students
+    return await self.repository.get_all_students(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        page, limit, offset, query_params
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\student_repository.py", line 26, in get_all_students
+    query = select(func.count()).select_from(Student.id)
+  File "<sqlalchemy generated _generative() wrapper for sqlalchemy.sql.selectable.Select.select_from>", line 2, in select_from
+    return target(fn, self, *froms)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\sql\base.py", line 296, in _generative
+    x = fn(self, *args, **kw)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\sql\selectable.py", line 6633, in select_from
+    self._from_obj += tuple(
+                      ^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\sql\selectable.py", line 6634, in <genexpr>
+    coercions.expect(
+    ~~~~~~~~~~~~~~~~^
+        roles.FromClauseRole, fromclause, apply_propagate_attrs=self
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\sql\coercions.py", line 434, in expect
+    return impl._implicit_coercions(
+           ~~~~~~~~~~~~~~~~~~~~~~~~^
+        original_element, resolved, argname=argname, **kw
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\sql\coercions.py", line 1287, in _implicit_coercions
+    self._raise_for_expected(element, argname, resolved)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\sql\coercions.py", line 705, in _raise_for_expected
+    super()._raise_for_expected(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        element,
+        ^^^^^^^^
+    ...<5 lines>...
+        **kw,
+        ^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\sql\coercions.py", line 528, in _raise_for_expected
+    raise exc.ArgumentError(msg, code=code) from err
+sqlalchemy.exc.ArgumentError: FROM expression, such as a Table or alias() object expected, got Column('id', Integer(), table=<students>, primary_key=True, nullable=False) object resolved from <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x0000027CD41DCFE0> object.

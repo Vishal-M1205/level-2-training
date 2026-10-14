@@ -1,7 +1,7 @@
 from typing import Annotated
 from app.database import get_db_connection
 from fastapi import Depends
-from psycopg import AsyncConnection
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.repositories.student_repository import StudentRepository
 from app.repositories.id_card_repository import IdCardRepository
@@ -15,13 +15,13 @@ from app.services.subject_service import SubjectService
 from app.services.exam_mark_service import ExamMarkService
 from app.utils.query_utils import QueryUtil
 
-DB_Connection = Annotated[AsyncConnection, Depends(get_db_connection)]
+DB_Session = Annotated[AsyncSession, Depends(get_db_connection)]
 
 
 def get_exam_result_repository(
-    connection: DB_Connection,
+    session: DB_Session,
 ) -> ExamResultRepository:
-    return ExamResultRepository(connection)
+    return ExamResultRepository(session)
 
 
 def get_exam_result_service(
@@ -31,21 +31,22 @@ def get_exam_result_service(
 
 
 def get_student_repository(
-    util: Annotated[QueryUtil, Depends(QueryUtil)], connection: DB_Connection
+    util: Annotated[QueryUtil, Depends(QueryUtil)], session: DB_Session
 ) -> StudentRepository:
-    return StudentRepository(util, connection)
+    return StudentRepository(util, session)
 
 
 def get_student_service(
     repository: Annotated[StudentRepository, Depends(get_student_repository)],
+    session: DB_Session,
 ) -> StudentService:
-    return StudentService(repository)
+    return StudentService(repository, session)
 
 
 def get_id_card_repository(
-    connection: DB_Connection,
+    session: DB_Session,
 ) -> IdCardRepository:
-    return IdCardRepository(connection)
+    return IdCardRepository(session)
 
 
 def get_id_card_service(
@@ -55,21 +56,22 @@ def get_id_card_service(
 
 
 def get_subject_repository(
-    connection: DB_Connection,
+    session: DB_Session,
 ) -> SubjectRepository:
-    return SubjectRepository(connection)
+    return SubjectRepository(session)
 
 
 def get_subject_service(
     repository: Annotated[SubjectRepository, Depends(get_subject_repository)],
+    session: DB_Session,
 ) -> SubjectService:
-    return SubjectService(repository)
+    return SubjectService(repository, session)
 
 
 def get_exam_mark_repository(
-    connection: DB_Connection,
+    session: DB_Session,
 ) -> ExamMarkRepository:
-    return ExamMarkRepository(connection)
+    return ExamMarkRepository(session)
 
 
 def get_exam_mark_service(

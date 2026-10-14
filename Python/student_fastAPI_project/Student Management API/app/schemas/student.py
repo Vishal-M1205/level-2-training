@@ -15,7 +15,7 @@ No need now , beacuse already table is created in the postgres
 
 class StudentResponse(BaseModel):
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(from_attributes=True)
 
     id: int = Field(description="ID is auto generated in postgres")
     name: str = Field(min_length=3)
@@ -25,13 +25,13 @@ class StudentResponse(BaseModel):
 
 class StudentListResponse(BaseModel):
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(from_attributes=True)
 
     students: list[StudentResponse]
     total: int = Field(description="Total Student Records in the Database")
     page: int = Field(description="Current Page")
     limit: int = Field(description="Maximum Records requested")
-    total_pages: int = Field("Total available pages")
+    total_pages: int = Field(description="Total available pages")
 
 
 class StudentCreate(BaseModel):

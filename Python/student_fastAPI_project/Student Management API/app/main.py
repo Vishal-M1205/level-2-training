@@ -4,7 +4,6 @@ from app.utils.log import setup_logging
 from app.routes.student_routes import router as student_router
 from app.routes.subject_routes import router as subject_router
 from app.routes.exam_mark_routes import router as exam_mark_router
-from app.database import pool
 from app.core.config import config
 
 import logging
@@ -35,15 +34,12 @@ app = FastAPI(
     title=config.app_name,
     description="Connected with Postgres and handles CRUD operations",
     version=config.app_version,
-    lifespan=db_lifespan,
-    #! lifespan take a contextmanager runs the start - ends the context upon shutdown of the
-    #! Application
 )
 # ! returns a FastAPI object to initiate the application
 
 app.include_router(student_router)
 app.include_router(subject_router)
-app.include_router(exam_mark_router)
+# app.include_router(exam_mark_router)
 
 
 @app.get("/", tags=["Home Page"])
