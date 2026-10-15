@@ -206,3 +206,18 @@ ON sub.id = ex.subject_id
 WHERE 
 st.id = 1;
 
+
+CREATE PROCEDURE academic_summary (
+IN st_id INTEGER,
+OUT total NUMERIC(5,2),
+OUT average NUMERIC(5,2)
+)
+LANGUAGE plpgsql
+AS 
+$$
+BEGIN
+total := (SELECT SUM(mark) AS total FROM exam_marks WHERE student_id = st_id);
+average := (SELECT AVG(mark) AS total FROM exam_marks WHERE student_id = st_id);
+END;
+$$;
+

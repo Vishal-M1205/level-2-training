@@ -10,7 +10,7 @@ from fastapi import (
 )
 from app.core.config import config
 from app.core.types import StudentID
-from app.schemas.result import ResultResponse
+from app.schemas.result import ResultResponse, AcademicSummary
 from app.schemas.student import (
     StudentPatch,
     StudentResponse,
@@ -146,6 +146,14 @@ async def get_student_exam_result_by_id(
 ):
     """Returns the exam result consist of marks, total and grade"""
     return await service.get_student_exam_result_by_id(student_id)
+
+
+@router.get("/{student_id}/academic-summary", response_model=AcademicSummary)
+async def get_academic_summary(
+    student_id: StudentID,
+    service: Annotated[IdCardService, Depends(get_student_service)],
+):
+    return await service.get_academic_summary(student_id)
 
 
 @router.post("/{student_id}/idcards")

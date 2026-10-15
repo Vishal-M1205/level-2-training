@@ -115,3 +115,7 @@ class StudentService:
             except Exception as e:
                 self.logger.exception(e)
                 raise HTTPException(status_code=500, detail="Internal Server Error")
+
+    async def get_academic_summary(self, student_id):
+        async with self.session.begin():
+            return await self.repository.get_academic_summary(student_id)

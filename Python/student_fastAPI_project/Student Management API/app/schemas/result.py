@@ -16,3 +16,11 @@ class ResultResponse(BaseModel):
     subjects: list[SubjectMark]
     total: Decimal = Field(max_digits=5, decimal_places=2, le=500.00)
     grade: str = Field(max_length=1)
+
+
+class AcademicSummary(BaseModel):
+
+    model_config = ConfigDict(from_attributes=True)
+
+    total: Decimal = Field(max_digits=5, decimal_places=2, le=500.00)
+    average: Decimal = Field(max_digits=5, decimal_places=2, le=100.00)

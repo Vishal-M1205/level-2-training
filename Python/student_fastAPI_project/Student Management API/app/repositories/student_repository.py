@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func, insert, update, delete
+from sqlalchemy import select, func, insert, update, delete, text
 from app.models.student import Student
 from app.schemas.student import StudentCreate, StudentUpdate
 from app.utils.query_utils import QueryUtil
@@ -98,3 +98,20 @@ class StudentRepository:
         row = row.scalar_one()
 
         return row
+
+    async def get_academic_summary(self, student_id):
+        result = await self.session.execute(
+            text("""
+            CALL academic_summary(
+                :st_id, NULL, NULL
+            )
+        """),
+            {"st_id": student_id},
+        )
+
+        row = result.fetchone()
+
+        return {
+            "total": row.total,
+            "average": row.average,
+        }
