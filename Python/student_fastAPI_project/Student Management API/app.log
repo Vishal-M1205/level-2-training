@@ -536,3 +536,9 @@ Traceback (most recent call last):
   File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\sql\coercions.py", line 528, in _raise_for_expected
     raise exc.ArgumentError(msg, code=code) from err
 sqlalchemy.exc.ArgumentError: FROM expression, such as a Table or alias() object expected, got Column('id', Integer(), table=<students>, primary_key=True, nullable=False) object resolved from <sqlalchemy.orm.attributes.InstrumentedAttribute object at 0x0000027CD41DCFE0> object.
+2026-10-15 15:04:24,222 : app.services.exam_mark_service : ERROR : 'builtin_function_or_method' object is not iterable
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\exam_mark_service.py", line 21, in get_all_exam_marks
+    key: value for key, value in kwargs.items if value is not None
+                                 ^^^^^^^^^^^^
+TypeError: 'builtin_function_or_method' object is not iterable

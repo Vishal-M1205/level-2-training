@@ -76,5 +76,6 @@ def get_exam_mark_repository(
 
 def get_exam_mark_service(
     repository: Annotated[ExamMarkRepository, Depends(get_exam_mark_repository)],
+    session: DB_Session,
 ) -> ExamMarkService:
-    return ExamMarkService(repository)
+    return ExamMarkService(repository, session)

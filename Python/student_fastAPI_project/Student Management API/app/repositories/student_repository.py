@@ -1,5 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
+from sqlalchemy import select, func, insert, update, delete
 from app.models.student import Student
 from app.schemas.student import StudentCreate, StudentUpdate
 from app.utils.query_utils import QueryUtil
@@ -15,8 +15,11 @@ class StudentRepository:
     async def get_all_students(self, page: int, limit: int, offset: int, params: dict):
         query = select(Student)
 
-        for field, values in params.items():
-            query = query.where(getattr(Student, field) == values)
+        for field, value in params.items():
+            if field == "name":
+                query = query.where(getattr(Student, field).ilike(f"%{value}%"))
+            else:
+                query = query.where(getattr(Student, field) == value)
 
         query = query.limit(limit).offset(offset)
 
@@ -31,7 +34,7 @@ class StudentRepository:
         total_records = await self.session.execute(query)
         total_records = total_records.scalar()
 
-        total_pages = math.ceil(total_records / limit)
+        total_pages = math.ceil(total_records / limit) or 1
 
         return {
             "students": rows,
@@ -53,79 +56,45 @@ class StudentRepository:
     """
 
     async def create_student(self, student: StudentCreate):
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(
-                """
-    INSERT INTO 
-    students (name,age,gender)
-    VALUES 
-    (%s,%s,%s) 
-    RETURNING id,name,age,gender; 
-    """,  #! RETURNING - fetches the row added
-                (student.name, student.age, student.gender),
-                #!ANOTHER WAY : tuple( student.model_dump().values() ),   object -> dict -> dict.values() -> tuple
-            )
+        stmnt = insert(Student).values(**student.model_dump()).returning(Student)
 
-            row = await cursor.fetchone()
+        row = await self.session.execute(stmnt)
+        row = row.scalar_one()
 
-            return row
+        return row
 
     async def update_student(self, student_id: int, student: StudentUpdate):
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(
-                """
-    UPDATE students 
-    SET 
-    name = %s,
-    age = %s,
-    gender = %s
-    WHERE 
-    id = %s
-    RETURNING id, name, age, gender; 
-    """,
-                (student.name, student.age, student.gender, student_id),
-            )
+        stmnt = (
+            update(Student)
+            .where(Student.id == student_id)
+            .values(**student.model_dump())
+            .returning(Student)
+        )
 
-            row = await cursor.fetchone()
+        row = await self.session.execute(stmnt)
+        row = row.scalar_one()
 
-            return row
+        return row
 
     async def delete_student(self, student_id: int):
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(
-                """
-    DELETE 
-    FROM students 
-    WHERE 
-    id = %s
-    RETURNING id;
-    """,  #! If the student exist and deleted RETURNING will return the 'id'
-                #! No student found then None
-                (student_id,),
-            )
+        stmnt = delete(Student).where(Student.id == student_id).returning(Student.id)
 
-            row = await cursor.fetchone()
+        row = await self.session.execute(stmnt)
+        row = row.scalar_one()
 
-            return row
+        print(row)
+
+        return row
 
     async def patch_student(self, student_id: int, payload: dict):
-        values = tuple(payload.values())
+        stmnt = (
+            update(Student)
+            .where(Student.id == student_id)
+            .values(**payload)
+            .returning(Student)
+        )
 
-        query = self.util.generate_query(payload, ",")
+        row = await self.session.execute(stmnt)
+        row = row.scalar_one()
 
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(
-                f"""
-    UPDATE students
-    SET 
-    {query}
-    WHERE 
-    id = %s
-    RETURNING id,name,age,gender;
-    """,
-                (*values, student_id),
-            )
-
-            row = await cursor.fetchone()
-
-            return row
+        return row

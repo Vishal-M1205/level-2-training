@@ -1,5 +1,5 @@
 from typing import Annotated
-from fastapi import APIRouter, status, Depends
+from fastapi import APIRouter, status, Depends, Query
 from app.schemas.exam_mark import (
     ExamMarkPatch,
     ExamMarkResponse,
@@ -8,6 +8,7 @@ from app.schemas.exam_mark import (
 )
 from app.services.exam_mark_service import ExamMarkService
 from app.dependencies import get_exam_mark_service
+from typing import Optional
 
 router = APIRouter(prefix="/exam-marks", tags=["Exam Mark Management"])
 
@@ -15,8 +16,12 @@ router = APIRouter(prefix="/exam-marks", tags=["Exam Mark Management"])
 @router.get("/", response_model=list[ExamMarkResponse])
 async def get_all_exam_marks(
     service: Annotated[ExamMarkService, Depends(get_exam_mark_service)],
+    subject_id: Optional[int] = Query(default=None, gt=0),
+    student_id: Optional[int] = Query(default=None, gt=0),
 ):
-    return await service.get_all_exam_marks()
+    return await service.get_all_exam_marks(
+        subject_id=subject_id, student_id=student_id
+    )
 
 
 @router.get("/{exam_mark_id}", response_model=ExamMarkResponse)

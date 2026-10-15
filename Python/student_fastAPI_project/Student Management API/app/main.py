@@ -39,7 +39,7 @@ app = FastAPI(
 
 app.include_router(student_router)
 app.include_router(subject_router)
-# app.include_router(exam_mark_router)
+app.include_router(exam_mark_router)
 
 
 @app.get("/", tags=["Home Page"])

@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from app.schemas.subject import SubjectCreate, SubjectUpdate
-from app.models.student import Subject
+from app.models.subject import Subject
 
 """
 Why await in get_connection() - as it invlove in I/O operation - connecting to DB

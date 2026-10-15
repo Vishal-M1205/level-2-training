@@ -46,6 +46,7 @@ async def get_all_students(
     service: Annotated[StudentService, Depends(get_student_service)],
     age: Optional[int] = None,
     gender: Optional[str] = None,
+    name: Optional[str] = None,
     page: int = Query(default=1, ge=1),
     limit: int = Query(default=5, le=10),
     user_agent: Optional[str] = Header(default=None),
@@ -70,7 +71,9 @@ async def get_all_students(
 
     #! Sending a header response
 
-    return await service.get_all_students(page, limit, age=age, gender=gender)
+    return await service.get_all_students(
+        page, limit, age=age, gender=gender, name=name
+    )
 
 
 @router.get("/{student_id}", response_model=StudentResponse)
