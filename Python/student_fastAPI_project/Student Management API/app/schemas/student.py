@@ -64,7 +64,7 @@ class StudentUpdate(BaseModel):
 
 class StudentPatch(BaseModel):
     name: Optional[str] = Field(min_length=3, default=None)
-    age: Optional[int] = Field(ge=6, le=18, default=None)
+    age: Optional[int] = Field(ge=17, le=35, default=None)
     gender: Optional[str] = Field(max_length=1, examples=["M", "F"], default=None)
 
     @field_validator("name")
@@ -73,3 +73,13 @@ class StudentPatch(BaseModel):
         if name is None:
             return
         return name.strip().title()
+
+
+class StudentMarkResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    name: str = Field(min_length=3)
+    age: int = Field(ge=17, le=35)
+    gender: str = Field(max_length=1, examples=["M", "F"])
+
+    marks: dict[str, int]

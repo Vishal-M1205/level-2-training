@@ -1,32 +1,31 @@
-from psycopg import AsyncConnection
+from sqlalchemy import select
+from sqlalchemy.orm import selectinload
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models.exam_mark import ExamMark
+from app.models.student import Student
 
 
 class ExamResultRepository:
 
-    def __init__(self, connection: AsyncConnection):
-        self.connection = connection
+    def __init__(self, session: AsyncSession):
+        self.session = session
 
     async def get_student_exam_result_by_id(self, student_id: int):
+        stmnt = (
+            select(Student)
+            .where(Student.id == student_id)
+            .options(selectinload(Student.exam_marks).selectinload(ExamMark.subject))
+        )
 
-        async with self.connection.cursor() as cursor:
-            await cursor.execute(
-                """
-SELECT 
-st.id,
-st.name as student_name,
-sub.name as subject_name,
-ex.mark 
-FROM exam_marks ex 
-JOIN students st 
-ON st.id = ex.student_id
-JOIN subjects sub
-ON sub.id = ex.subject_id 
-WHERE 
-st.id = %s;
-""",
-                (student_id,),
-            )
-
-            rows = await cursor.fetchall()
-
-            return rows
+        row = await self.session.execute(stmnt)
+        row = row.scalar_one_or_none()
+        if row is not None:
+            return {
+                "student_id": student_id,
+                "student_name": row.name,
+                "subjects": [
+                    {"subject_name": x.subject.name, "mark": x.mark}
+                    for x in row.exam_marks
+                ],
+            }

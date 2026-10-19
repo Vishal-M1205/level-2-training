@@ -10,7 +10,7 @@ class IdCardCreate(BaseModel):
 
 class IdCardResponse(BaseModel):
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(from_attributes=True)
 
     id: int
     student_id: int

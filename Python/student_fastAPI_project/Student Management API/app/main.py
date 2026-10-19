@@ -1,5 +1,6 @@
-from fastapi import FastAPI, Response, Cookie
-from contextlib import asynccontextmanager
+from fastapi import FastAPI, Response, Request, status
+from fastapi.responses import JSONResponse
+from sqlalchemy.exc import IntegrityError
 from app.utils.log import setup_logging
 from app.routes.student_routes import router as student_router
 from app.routes.subject_routes import router as subject_router
@@ -13,23 +14,6 @@ setup_logging()
 logger = logging.getLogger(__name__)
 
 
-@asynccontextmanager
-async def db_lifespan(app: FastAPI):
-
-    #! app.state - app place to store data related to the application can access it
-    #! using - Request.app.state
-
-    app.state.db_pool = pool
-
-    await pool.open(wait=True)
-    #! wait = True - means wait until the connection pool has established its minimum number of connections before continuing application startup.
-
-    try:
-        yield
-    finally:
-        await pool.close()
-
-
 app = FastAPI(
     title=config.app_name,
     description="Connected with Postgres and handles CRUD operations",
@@ -40,6 +24,25 @@ app = FastAPI(
 app.include_router(student_router)
 app.include_router(subject_router)
 app.include_router(exam_mark_router)
+
+
+@app.exception_handler(IntegrityError)
+async def integrity_error_handler(request: Request, exc: IntegrityError):
+    logger.error("Database integrity error on %s %s: %s", request.method, request.url.path, exc)
+    return JSONResponse(
+        status_code=status.HTTP_409_CONFLICT,
+        content={"detail": "Database conflict or constraint violation occurred."},
+    )
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    logger.exception("Unhandled error processing %s %s: %s", request.method, request.url.path, exc)
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={"detail": "Internal Server Error"},
+    )
+
 
 
 @app.get("/", tags=["Home Page"])

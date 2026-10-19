@@ -13,7 +13,6 @@ from app.services.student_service import StudentService
 from app.services.id_card_service import IdCardService
 from app.services.subject_service import SubjectService
 from app.services.exam_mark_service import ExamMarkService
-from app.utils.query_utils import QueryUtil
 
 DB_Session = Annotated[AsyncSession, Depends(get_db_connection)]
 
@@ -26,14 +25,13 @@ def get_exam_result_repository(
 
 def get_exam_result_service(
     repository: Annotated[ExamResultRepository, Depends(get_exam_result_repository)],
+    session: DB_Session,
 ) -> ExamResultService:
-    return ExamResultService(repository)
+    return ExamResultService(repository, session)
 
 
-def get_student_repository(
-    util: Annotated[QueryUtil, Depends(QueryUtil)], session: DB_Session
-) -> StudentRepository:
-    return StudentRepository(util, session)
+def get_student_repository(session: DB_Session) -> StudentRepository:
+    return StudentRepository(session)
 
 
 def get_student_service(
@@ -51,8 +49,9 @@ def get_id_card_repository(
 
 def get_id_card_service(
     repository: Annotated[IdCardRepository, Depends(get_id_card_repository)],
+    session: DB_Session,
 ) -> IdCardService:
-    return IdCardService(repository)
+    return IdCardService(repository, session)
 
 
 def get_subject_repository(

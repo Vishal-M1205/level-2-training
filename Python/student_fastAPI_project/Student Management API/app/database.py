@@ -6,12 +6,12 @@ from sqlalchemy.pool import AsyncAdaptedQueuePool
 from sqlalchemy import URL
 
 conn_url = URL.create(
-    drivername="postgresql+psycopg",
-    username="postgres",
-    password="CG-vak123",
-    host="localhost",
-    database="student_db",
-    port=5432,
+    drivername=config.database_drivername,
+    username=config.database_user,
+    password=config.database_password,
+    host=config.database_host,
+    database=config.database_name,
+    port=config.database_port,
 )
 
 

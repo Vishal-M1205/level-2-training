@@ -7,6 +7,7 @@ class Config(BaseSettings):
     database_name: str
     database_user: str
     database_password: str
+    database_drivername: str
     app_name: str
     app_version: str
 

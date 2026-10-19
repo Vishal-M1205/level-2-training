@@ -12,6 +12,7 @@ from app.core.config import config
 from app.core.types import StudentID
 from app.schemas.result import ResultResponse, AcademicSummary
 from app.schemas.student import (
+    StudentMarkResponse,
     StudentPatch,
     StudentResponse,
     StudentCreate,
@@ -151,9 +152,17 @@ async def get_student_exam_result_by_id(
 @router.get("/{student_id}/academic-summary", response_model=AcademicSummary)
 async def get_academic_summary(
     student_id: StudentID,
-    service: Annotated[IdCardService, Depends(get_student_service)],
+    service: Annotated[StudentService, Depends(get_student_service)],
 ):
     return await service.get_academic_summary(student_id)
+
+
+@router.get("/{student_id}/marks", response_model=StudentMarkResponse)
+async def get_student_marks(
+    student_id: StudentID,
+    service: Annotated[StudentService, Depends(get_student_service)],
+):
+    return await service.get_student_marks(student_id)
 
 
 @router.post("/{student_id}/idcards")

@@ -1,15 +1,16 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, insert, update, delete, text
+from sqlalchemy.orm import selectinload
+from app.models.exam_mark import ExamMark
 from app.models.student import Student
 from app.schemas.student import StudentCreate, StudentUpdate
-from app.utils.query_utils import QueryUtil
+
 import math
 
 
 class StudentRepository:
 
-    def __init__(self, util: QueryUtil, session: AsyncSession):
-        self.util = util
+    def __init__(self, session: AsyncSession):
         self.session = session
 
     async def get_all_students(self, page: int, limit: int, offset: int, params: dict):
@@ -72,7 +73,7 @@ class StudentRepository:
         )
 
         row = await self.session.execute(stmnt)
-        row = row.scalar_one()
+        row = row.scalar_one_or_none()
 
         return row
 
@@ -80,9 +81,7 @@ class StudentRepository:
         stmnt = delete(Student).where(Student.id == student_id).returning(Student.id)
 
         row = await self.session.execute(stmnt)
-        row = row.scalar_one()
-
-        print(row)
+        row = row.scalar_one_or_none()
 
         return row
 
@@ -95,7 +94,7 @@ class StudentRepository:
         )
 
         row = await self.session.execute(stmnt)
-        row = row.scalar_one()
+        row = row.scalar_one_or_none()
 
         return row
 
@@ -114,4 +113,21 @@ class StudentRepository:
         return {
             "total": row.total,
             "average": row.average,
+        }
+
+    async def get_student_marks(self, student_id: int):
+        stmnt = (
+            select(Student)
+            .where(Student.id == student_id)
+            .options(selectinload(Student.exam_marks).selectinload(ExamMark.subject))
+        )
+
+        row = await self.session.execute(stmnt)
+        row = row.scalar_one()
+
+        return {
+            "name": row.name,
+            "age": row.age,
+            "gender": row.gender,
+            "marks": {mark.subject.name: mark.mark for mark in row.exam_marks},
         }

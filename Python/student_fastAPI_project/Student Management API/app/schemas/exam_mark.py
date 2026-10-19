@@ -5,7 +5,7 @@ from decimal import Decimal
 
 class ExamMarkResponse(BaseModel):
 
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(from_attributes=True)
 
     id: int = Field(description="ID is auto generated in postgres")
     student_id: int

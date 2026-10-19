@@ -1,45 +1,35 @@
-from psycopg.errors import IntegrityError
-from app.repositories.result_repository import ExamResultRepository
-from fastapi import HTTPException
 from decimal import Decimal
 import logging
+from fastapi import HTTPException
+from app.repositories.result_repository import ExamResultRepository
+from sqlalchemy.ext.asyncio import AsyncSession
 
 
 class ExamResultService:
 
-    def __init__(self, repository: ExamResultRepository):
+    def __init__(self, repository: ExamResultRepository, session: AsyncSession):
         self.logger = logging.getLogger(__name__)
         self.repository = repository
+        self.session = session
 
     async def get_student_exam_result_by_id(self, student_id: int) -> dict:
-        try:
-            marks = await self.repository.get_student_exam_result_by_id(student_id)
-            if marks == []:
+        async with self.session.begin():
+            data = await self.repository.get_student_exam_result_by_id(student_id)
+            if not data:
                 raise HTTPException(
                     status_code=404,
                     detail=f"No Result Found for the Student ID : {student_id} ",
                 )
-            total = sum(x["mark"] for x in marks)
+            total = sum(x["mark"] for x in data["subjects"])
             grade = self.calculate_grade_from_total(total)
+            data.update(
+                {
+                    "total": total,
+                    "grade": grade,
+                }
+            )
 
-            return {
-                "student_id": student_id,
-                "student_name": marks[0]["student_name"],
-                "subjects": [
-                    {"subject_name": x["subject_name"], "mark": x["mark"]}
-                    for x in marks
-                ],
-                "total": total,
-                "grade": grade,
-            }
-
-        except HTTPException:
-            raise
-        except IntegrityError:
-            raise HTTPException(status_code=409, detail="Integrity Error")
-        except Exception as e:
-            self.logger.exception(e)
-            raise HTTPException(status_code=500, detail="Internal Server Error")
+            return data
 
     def calculate_grade_from_total(self, total: Decimal) -> str:
         match total:
