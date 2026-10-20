@@ -8,5 +8,11 @@ class StudentTotal(BaseModel):
     total: Decimal = Field(max_digits=5, decimal_places=2)
 
 
+class StudentAverage(BaseModel):
+    id: int
+    name: str = Field(min_length=3)
+    average: Decimal = Field(max_digits=5, decimal_places=2)
+
+
 class TopFiveStudents(BaseModel):
-    students: list[StudentTotal] = Field(max_length=5)
+    students: list[StudentTotal | StudentAverage] = Field(max_length=5)

@@ -1,5 +1,7 @@
 from app.repositories.class_repository import ClassRepository
 from sqlalchemy.ext.asyncio import AsyncSession
+from fastapi.exceptions import HTTPException
+from fastapi import status
 
 
 class ClassService:
@@ -9,4 +11,20 @@ class ClassService:
 
     async def get_top_five_students(self):
         async with self.session.begin():
-            return await self.repository.get_top_five_students()
+            rows = await self.repository.get_top_five_students()
+            if rows is None:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND, detail="No Student Found"
+                )
+
+            return rows
+
+    async def get_top_five_average(self):
+        async with self.session.begin():
+            rows = await self.repository.get_top_five_average()
+            if rows is None:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND, detail="No Student Found"
+                )
+
+            return rows

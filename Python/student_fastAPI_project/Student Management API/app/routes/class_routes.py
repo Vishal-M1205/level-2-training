@@ -13,4 +13,15 @@ router = APIRouter(prefix="/class", tags=["Class Statistics"])
 async def get_top_five_students(
     service: Annotated[ClassService, Depends(get_class_service)],
 ):
+    """Returns the Top 5 students from the data based on their total"""
     return await service.get_top_five_students()
+
+
+@router.get(
+    "/top-five-average", response_model=TopFiveStudents, status_code=status.HTTP_200_OK
+)
+async def get_top_five_average(
+    service: Annotated[ClassService, Depends(get_class_service)],
+):
+    """Returns the Top 5 students from the data based on their average and class average"""
+    return await service.get_top_five_average()

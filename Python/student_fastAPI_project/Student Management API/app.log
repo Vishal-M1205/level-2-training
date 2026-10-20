@@ -6190,3 +6190,245 @@ Traceback (most recent call last):
   File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\pydantic\_internal\_validators.py", line 290, in greater_than_or_equal_validator
     raise TypeError(f"Unable to apply constraint 'ge' to supplied value {x}")
 TypeError: Unable to apply constraint 'ge' to supplied value Ananya R
+2026-10-20 15:02:30,526 : app.main : ERROR : Unhandled error processing GET /class/top-five-average: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) argument of HAVING must be type boolean, not type numeric
+[SQL: SELECT students.id, students.name, avg(exam_marks.mark) AS average 
+FROM students JOIN exam_marks ON students.id = exam_marks.student_id GROUP BY students.id, students.name 
+HAVING (SELECT avg(exam_marks.mark) AS avg_1 
+FROM exam_marks) ORDER BY avg(exam_marks.mark) DESC 
+ LIMIT $1::INTEGER]
+[parameters: (5,)]
+(Background on this error at: https://sqlalche.me/e/21/f405)
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 581, in _prepare_and_execute
+    prepared_stmt, attributes = await adapt_connection._prepare(
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        operation, self._invalidate_schema_cache_asof
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 819, in _prepare
+    prepared_stmt = await self._connection.prepare(
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        operation, name=self._prepared_statement_name_func()
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\asyncpg\connection.py", line 661, in prepare
+    return await self._prepare(
+           ^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\asyncpg\connection.py", line 680, in _prepare
+    stmt = await self._get_statement(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\asyncpg\connection.py", line 466, in _get_statement
+    statement = await self._protocol.prepare(
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+    )
+    ^
+  File "asyncpg/protocol/protocol.pyx", line 161, in prepare
+asyncpg.exceptions.DatatypeMismatchError: argument of HAVING must be type boolean, not type numeric
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1946, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1192, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 656, in execute
+    await_(self._prepare_and_execute(operation, parameters))
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\util\concurrency.py", line 167, in await_
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\util\concurrency.py", line 205, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 618, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 568, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 847, in _handle_exception
+    super()._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\connectors\asyncio.py", line 412, in _handle_exception
+    self._handle_exception_no_connection(self.dbapi, error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 840, in _handle_exception_no_connection
+    raise translated_error from error
+sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError: argument of HAVING must be type boolean, not type numeric
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 360, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\routes\class_routes.py", line 25, in get_top_five_average
+    await service.get_top_five_average()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\class_service.py", line 16, in get_top_five_average
+    await self.repository.get_top_five_average()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\class_repository.py", line 37, in get_top_five_average
+    rows = await self.session.execute(stmnt)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\ext\asyncio\session.py", line 651, in execute
+    result = await greenlet_spawn(
+             ^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\util\concurrency.py", line 210, in greenlet_spawn
+    result = context.throw(*sys.exc_info())
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2473, in execute
+    return self._execute_internal(
+           ~~~~~~~~~~~~~~~~~~~~~~^
+        statement,
+        ^^^^^^^^^^
+    ...<4 lines>...
+        _add_event=_add_event,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\session.py", line 2363, in _execute_internal
+    compile_state_cls.orm_execute_statement(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self,
+        ^^^^^
+    ...<4 lines>...
+        conn,
+        ^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\orm\context.py", line 316, in orm_execute_statement
+    result = conn.execute(
+        statement, params or {}, execution_options=execution_options
+    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1451, in execute
+    return meth(
+        self,
+        distilled_parameters,
+        execution_options or NO_OPTIONS,
+    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\sql\elements.py", line 533, in _execute_on_connection
+    return connection._execute_clauseelement(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        self, distilled_params, execution_options
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1671, in _execute_clauseelement
+    ret = self._execute_context(
+        dialect,
+    ...<9 lines>...
+        param_dict=param_dict,
+    )
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1825, in _execute_context
+    return self._exec_single_context(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~^
+        dialect, context, statement, parameters
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1965, in _exec_single_context
+    self._handle_dbapi_exception(
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        e, str_statement, effective_parameters, cursor, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 2335, in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\base.py", line 1946, in _exec_single_context
+    self.dialect.do_execute(
+    ~~~~~~~~~~~~~~~~~~~~~~~^
+        cursor, str_statement, effective_parameters, context
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\engine\default.py", line 1192, in do_execute
+    cursor.execute(statement, parameters)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 656, in execute
+    await_(self._prepare_and_execute(operation, parameters))
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\util\concurrency.py", line 167, in await_
+    return current.parent.switch(awaitable)  # type: ignore[no-any-return]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\util\concurrency.py", line 205, in greenlet_spawn
+    value = await result
+            ^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 618, in _prepare_and_execute
+    self._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 568, in _handle_exception
+    self._adapt_connection._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 847, in _handle_exception
+    super()._handle_exception(error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\connectors\asyncio.py", line 412, in _handle_exception
+    self._handle_exception_no_connection(self.dbapi, error)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 840, in _handle_exception_no_connection
+    raise translated_error from error
+sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) argument of HAVING must be type boolean, not type numeric
+[SQL: SELECT students.id, students.name, avg(exam_marks.mark) AS average 
+FROM students JOIN exam_marks ON students.id = exam_marks.student_id GROUP BY students.id, students.name 
+HAVING (SELECT avg(exam_marks.mark) AS avg_1 
+FROM exam_marks) ORDER BY avg(exam_marks.mark) DESC 
+ LIMIT $1::INTEGER]
+[parameters: (5,)]
+(Background on this error at: https://sqlalche.me/e/21/f405)
