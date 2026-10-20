@@ -1,15 +1,15 @@
 import pytest
 import psycopg
 from fastapi.testclient import TestClient
+from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+from sqlalchemy.pool import NullPool
+from app.models.base import Base
 
 from app.main import app
 from app.database import conn_url, get_db_connection
 from app.core.config import config
 
-from sqlalchemy.pool import NullPool
-
-# Connect to the isolated test database
 test_conn_url = conn_url.set(database="student_db_test")
 test_engine = create_async_engine(test_conn_url, poolclass=NullPool)
 TestingSessionLocal = async_sessionmaker(bind=test_engine, expire_on_commit=False)
@@ -22,7 +22,8 @@ async def override_get_db_connection():
 
 @pytest.fixture
 def client():
-    """Provides a FastAPI test client configured to use the test database."""
+    """dependency_overrides is a dictionary , as get_db_connection used in the app we are overriding and clear() the
+    dict at last"""
     app.dependency_overrides[get_db_connection] = override_get_db_connection
     with TestClient(app) as test_client:
         yield test_client
@@ -31,7 +32,9 @@ def client():
 
 @pytest.fixture(autouse=True)
 def clean_tables():
-    """Automatically cleans all tables after every test to ensure complete test isolation."""
+    """autouse run automattically , first the yeild means it let all the fixturre and test to run ,
+    RESTART IDENTITY , the id starts frm 1 , CASCADE prevents the error occur from the refrential rows
+    """
     yield
     with psycopg.connect(
         host=config.database_host,
