@@ -5,6 +5,7 @@ from app.utils.log import setup_logging
 from app.routes.student_routes import router as student_router
 from app.routes.subject_routes import router as subject_router
 from app.routes.exam_mark_routes import router as exam_mark_router
+from app.routes.class_routes import router as class_router
 from app.core.config import config
 
 import logging
@@ -24,11 +25,14 @@ app = FastAPI(
 app.include_router(student_router)
 app.include_router(subject_router)
 app.include_router(exam_mark_router)
+app.include_router(class_router)
 
 
 @app.exception_handler(IntegrityError)
 async def integrity_error_handler(request: Request, exc: IntegrityError):
-    logger.error("Database integrity error on %s %s: %s", request.method, request.url.path, exc)
+    logger.error(
+        "Database integrity error on %s %s: %s", request.method, request.url.path, exc
+    )
     return JSONResponse(
         status_code=status.HTTP_409_CONFLICT,
         content={"detail": "Database conflict or constraint violation occurred."},
@@ -37,12 +41,13 @@ async def integrity_error_handler(request: Request, exc: IntegrityError):
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):
-    logger.exception("Unhandled error processing %s %s: %s", request.method, request.url.path, exc)
+    logger.exception(
+        "Unhandled error processing %s %s: %s", request.method, request.url.path, exc
+    )
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={"detail": "Internal Server Error"},
     )
-
 
 
 @app.get("/", tags=["Home Page"])

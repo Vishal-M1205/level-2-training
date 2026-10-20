@@ -14,7 +14,7 @@ venv/
 env/
 ENV/
 
-# Application logs
+
 *.log
 app.log
 

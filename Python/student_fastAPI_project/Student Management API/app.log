@@ -3,7 +3,7 @@ Traceback (most recent call last):
   File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\main.py", line 59, in get_student_by_id
                     cursor.execute(
                     ~~~~~~~~~~~~~~^
-                        """
+                        """ 
                         ^^^
     ...<8 lines>...
                         (student_id),
@@ -5947,3 +5947,246 @@ sqlalchemy.exc.DBAPIError: (sqlalchemy.dialects.postgresql.asyncpg.Error) databa
 2026-10-20 10:17:22,727 : httpx2 : INFO : HTTP Request: POST http://testserver/subjects/ "HTTP/1.1 201 Created"
 2026-10-20 10:17:22,935 : httpx2 : INFO : HTTP Request: DELETE http://testserver/subjects/1 "HTTP/1.1 204 No Content"
 2026-10-20 10:17:23,131 : httpx2 : INFO : HTTP Request: GET http://testserver/subjects/1 "HTTP/1.1 404 Not Found"
+2026-10-20 12:55:03,711 : httpx2 : INFO : HTTP Request: POST http://testserver/subjects/ "HTTP/1.1 201 Created"
+2026-10-20 12:55:04,020 : httpx2 : INFO : HTTP Request: POST http://testserver/subjects/ "HTTP/1.1 422 Unprocessable Content"
+2026-10-20 12:55:04,618 : httpx2 : INFO : HTTP Request: POST http://testserver/subjects/ "HTTP/1.1 201 Created"
+2026-10-20 12:55:04,964 : httpx2 : INFO : HTTP Request: POST http://testserver/subjects/ "HTTP/1.1 201 Created"
+2026-10-20 12:55:05,293 : httpx2 : INFO : HTTP Request: GET http://testserver/subjects/ "HTTP/1.1 200 OK"
+2026-10-20 12:55:05,749 : httpx2 : INFO : HTTP Request: POST http://testserver/subjects/ "HTTP/1.1 201 Created"
+2026-10-20 12:55:05,951 : httpx2 : INFO : HTTP Request: GET http://testserver/subjects/1 "HTTP/1.1 200 OK"
+2026-10-20 12:55:06,448 : httpx2 : INFO : HTTP Request: GET http://testserver/subjects/20000 "HTTP/1.1 404 Not Found"
+2026-10-20 12:55:07,118 : httpx2 : INFO : HTTP Request: POST http://testserver/subjects/ "HTTP/1.1 201 Created"
+2026-10-20 12:55:07,337 : httpx2 : INFO : HTTP Request: PUT http://testserver/subjects/1 "HTTP/1.1 200 OK"
+2026-10-20 12:55:07,866 : httpx2 : INFO : HTTP Request: POST http://testserver/subjects/ "HTTP/1.1 201 Created"
+2026-10-20 12:55:08,055 : httpx2 : INFO : HTTP Request: PATCH http://testserver/subjects/1 "HTTP/1.1 200 OK"
+2026-10-20 12:55:08,615 : httpx2 : INFO : HTTP Request: POST http://testserver/subjects/ "HTTP/1.1 201 Created"
+2026-10-20 12:55:08,842 : httpx2 : INFO : HTTP Request: DELETE http://testserver/subjects/1 "HTTP/1.1 204 No Content"
+2026-10-20 12:55:09,031 : httpx2 : INFO : HTTP Request: GET http://testserver/subjects/1 "HTTP/1.1 404 Not Found"
+2026-10-20 13:09:36,621 : app.main : ERROR : Unhandled error processing GET /class/top-five: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\routes\class_routes.py", line 12, in get_top_five_students
+    GET /class/top-five
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 749, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 331, in serialize_response
+    raise ResponseValidationError(
+    ...<3 lines>...
+    )
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': None}
+
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\routes\class_routes.py", line 12, in get_top_five_students
+    GET /class/top-five
+2026-10-20 13:11:30,493 : app.main : ERROR : Unhandled error processing GET /class/top-five: 'function' object has no attribute 'all'
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 727, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 360, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\routes\class_routes.py", line 16, in get_top_five_students
+    await service.get_top_five_students()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\services\class_service.py", line 12, in get_top_five_students
+    await self.repository.get_top_five_students()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\repositories\class_repository.py", line 23, in get_top_five_students
+    print(rows.mappings.all())
+          ^^^^^^^^^^^^^^^^^
+AttributeError: 'function' object has no attribute 'all'
+2026-10-20 13:18:15,965 : app.main : ERROR : Unhandled error processing GET /class/top-five: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': [{'id': 8, 'name': 'Ananya R', 'total': Decimal('355.00')}, {'id': 10, 'name': 'Keerthana M', 'total': Decimal('358.00')}, {'id': 4, 'name': 'Divya Krishnan', 'total': Decimal('370.00')}, {'id': 6, 'name': 'Sneha Devi', 'total': Decimal('378.00')}, {'id': 2, 'name': 'Priya Sharma', 'total': Decimal('402.00')}]}
+
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\routes\class_routes.py", line 12, in get_top_five_students
+    GET /class/top-five
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 749, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 331, in serialize_response
+    raise ResponseValidationError(
+    ...<3 lines>...
+    )
+fastapi.exceptions.ResponseValidationError: 1 validation error:
+  {'type': 'model_attributes_type', 'loc': ('response',), 'msg': 'Input should be a valid dictionary or object to extract fields from', 'input': [{'id': 8, 'name': 'Ananya R', 'total': Decimal('355.00')}, {'id': 10, 'name': 'Keerthana M', 'total': Decimal('358.00')}, {'id': 4, 'name': 'Divya Krishnan', 'total': Decimal('370.00')}, {'id': 6, 'name': 'Sneha Devi', 'total': Decimal('378.00')}, {'id': 2, 'name': 'Priya Sharma', 'total': Decimal('402.00')}]}
+
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\routes\class_routes.py", line 12, in get_top_five_students
+    GET /class/top-five
+2026-10-20 13:19:35,063 : app.main : ERROR : Unhandled error processing GET /class/top-five: Unable to apply constraint 'ge' to supplied value Ananya R
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\pydantic\_internal\_validators.py", line 286, in greater_than_or_equal_validator
+    if not (x >= ge):
+            ^^^^^^^
+TypeError: '>=' not supported between instances of 'str' and 'int'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 749, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 324, in serialize_response
+    value, errors = field.validate(response_content, {}, loc=("response",))
+                    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\_compat\v2.py", line 182, in validate
+    self._type_adapter.validate_python(value, from_attributes=True),
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\pydantic\type_adapter.py", line 441, in validate_python
+    return self.validator.validate_python(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        object,
+        ^^^^^^^
+    ...<6 lines>...
+        by_name=by_name,
+        ^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\pydantic\_internal\_validators.py", line 290, in greater_than_or_equal_validator
+    raise TypeError(f"Unable to apply constraint 'ge' to supplied value {x}")
+TypeError: Unable to apply constraint 'ge' to supplied value Ananya R

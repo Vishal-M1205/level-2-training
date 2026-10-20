@@ -3,11 +3,13 @@ from app.database import get_db_connection
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.repositories.class_repository import ClassRepository
 from app.repositories.student_repository import StudentRepository
 from app.repositories.id_card_repository import IdCardRepository
 from app.repositories.result_repository import ExamResultRepository
 from app.repositories.subject_repository import SubjectRepository
 from app.repositories.exam_mark_repository import ExamMarkRepository
+from app.services.class_service import ClassService
 from app.services.result_service import ExamResultService
 from app.services.student_service import StudentService
 from app.services.id_card_service import IdCardService
@@ -78,3 +80,14 @@ def get_exam_mark_service(
     session: DB_Session,
 ) -> ExamMarkService:
     return ExamMarkService(repository, session)
+
+
+def get_class_repository(session: DB_Session) -> ClassRepository:
+    return ClassRepository(session)
+
+
+def get_class_service(
+    session: DB_Session,
+    repository: Annotated[ClassRepository, Depends(get_class_repository)],
+) -> ClassService:
+    return ClassService(repository, session)
