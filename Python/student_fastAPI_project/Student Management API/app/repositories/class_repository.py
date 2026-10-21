@@ -1,11 +1,12 @@
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.interfaces.class_interface import ClassInterface
 from app.models.exam_mark import ExamMark
 from app.models.student import Student
 
 
-class ClassRepository:
+class ClassRepository(ClassInterface):
     def __init__(self, session: AsyncSession):
         self.session = session
 

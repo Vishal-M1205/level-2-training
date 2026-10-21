@@ -2,13 +2,13 @@ import logging
 from fastapi import HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.repositories.subject_repository import SubjectRepository
+from app.interfaces.subject_interface import SubjectInterface
 from app.schemas.subject import SubjectCreate, SubjectPatch, SubjectUpdate
 
 
 class SubjectService:
 
-    def __init__(self, repository: SubjectRepository, session: AsyncSession):
+    def __init__(self, repository: SubjectInterface, session: AsyncSession):
         self.logger = logging.getLogger(__name__)
         self.repository = repository
         self.session = session
@@ -54,4 +54,3 @@ class SubjectService:
             if row is None:
                 raise HTTPException(status_code=404, detail="No Subject Found")
             return row
-

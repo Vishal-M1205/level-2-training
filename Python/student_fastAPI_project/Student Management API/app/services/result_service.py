@@ -1,13 +1,14 @@
 from decimal import Decimal
 import logging
 from fastapi import HTTPException
-from app.repositories.result_repository import ExamResultRepository
 from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.interfaces.result_interface import ExamResultInterface
 
 
 class ExamResultService:
 
-    def __init__(self, repository: ExamResultRepository, session: AsyncSession):
+    def __init__(self, repository: ExamResultInterface, session: AsyncSession):
         self.logger = logging.getLogger(__name__)
         self.repository = repository
         self.session = session
@@ -31,7 +32,7 @@ class ExamResultService:
 
             return data
 
-    def calculate_grade_from_total(self, total: Decimal) -> str:
+    def calculate_grade_from_total(self, total: int) -> str:
         match total:
             case total if total > 450:
                 return "A"

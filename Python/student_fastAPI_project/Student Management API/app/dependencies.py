@@ -3,6 +3,11 @@ from app.database import get_db_connection
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.interfaces.class_interface import ClassInterface
+from app.interfaces.result_interface import ExamResultInterface
+from app.interfaces.id_card_interface import IdCardInterface
+from app.interfaces.subject_interface import SubjectInterface
+from app.interfaces.student_interface import StudentInterface
 from app.repositories.class_repository import ClassRepository
 from app.repositories.student_repository import StudentRepository
 from app.repositories.id_card_repository import IdCardRepository
@@ -21,23 +26,23 @@ DB_Session = Annotated[AsyncSession, Depends(get_db_connection)]
 
 def get_exam_result_repository(
     session: DB_Session,
-) -> ExamResultRepository:
+) -> ExamResultInterface:
     return ExamResultRepository(session)
 
 
 def get_exam_result_service(
-    repository: Annotated[ExamResultRepository, Depends(get_exam_result_repository)],
+    repository: Annotated[ExamResultInterface, Depends(get_exam_result_repository)],
     session: DB_Session,
 ) -> ExamResultService:
     return ExamResultService(repository, session)
 
 
-def get_student_repository(session: DB_Session) -> StudentRepository:
+def get_student_repository(session: DB_Session) -> StudentInterface:
     return StudentRepository(session)
 
 
 def get_student_service(
-    repository: Annotated[StudentRepository, Depends(get_student_repository)],
+    repository: Annotated[StudentInterface, Depends(get_student_repository)],
     session: DB_Session,
 ) -> StudentService:
     return StudentService(repository, session)
@@ -45,12 +50,12 @@ def get_student_service(
 
 def get_id_card_repository(
     session: DB_Session,
-) -> IdCardRepository:
+) -> IdCardInterface:
     return IdCardRepository(session)
 
 
 def get_id_card_service(
-    repository: Annotated[IdCardRepository, Depends(get_id_card_repository)],
+    repository: Annotated[IdCardInterface, Depends(get_id_card_repository)],
     session: DB_Session,
 ) -> IdCardService:
     return IdCardService(repository, session)
@@ -58,12 +63,12 @@ def get_id_card_service(
 
 def get_subject_repository(
     session: DB_Session,
-) -> SubjectRepository:
+) -> SubjectInterface:
     return SubjectRepository(session)
 
 
 def get_subject_service(
-    repository: Annotated[SubjectRepository, Depends(get_subject_repository)],
+    repository: Annotated[SubjectInterface, Depends(get_subject_repository)],
     session: DB_Session,
 ) -> SubjectService:
     return SubjectService(repository, session)
@@ -82,12 +87,12 @@ def get_exam_mark_service(
     return ExamMarkService(repository, session)
 
 
-def get_class_repository(session: DB_Session) -> ClassRepository:
+def get_class_repository(session: DB_Session) -> ClassInterface:
     return ClassRepository(session)
 
 
 def get_class_service(
     session: DB_Session,
-    repository: Annotated[ClassRepository, Depends(get_class_repository)],
+    repository: Annotated[ClassInterface, Depends(get_class_repository)],
 ) -> ClassService:
     return ClassService(repository, session)

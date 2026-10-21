@@ -6,19 +6,23 @@ from fastapi import HTTPException, UploadFile, status
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.repositories.id_card_repository import IdCardRepository
+from app.interfaces.id_card_interface import IdCardInterface
 from app.schemas.id_card import IdCardCreate
 from app.utils.path_utils import generate_file_path
 
 
 class IdCardService:
 
-    def __init__(self, repository: IdCardRepository, session: AsyncSession):
+    def __init__(self, repository: IdCardInterface, session: AsyncSession):
         self.logger = logging.getLogger(__name__)
         self.repository = repository
         self.session = session
 
     async def upload_student_id_card(self, student_id: int, file: UploadFile):
+        if not file.size:
+            raise ValueError("No file found")
+        if not file.filename:
+            raise ValueError("Uploaded file has no filename")
         if file.size > (1024 * 1024) * 10:
             raise HTTPException(status_code=status.HTTP_413_CONTENT_TOO_LARGE)
 
@@ -67,4 +71,3 @@ class IdCardService:
             if Path(id_card_file_path).exists():
                 Path(id_card_file_path).unlink(missing_ok=True)
             raise
-

@@ -1,15 +1,11 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
+from app.interfaces.subject_interface import SubjectInterface
 from app.schemas.subject import SubjectCreate, SubjectUpdate
 from app.models.subject import Subject
 
-"""
-Why await in get_connection() - as it invlove in I/O operation - connecting to DB
-connection.cursor() is just returning the coroutine curo object so no await needed
-"""
 
-
-class SubjectRepository:
+class SubjectRepository(SubjectInterface):
 
     def __init__(self, session: AsyncSession):
         self.session = session

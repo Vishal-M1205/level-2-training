@@ -1,14 +1,14 @@
 import logging
-from fastapi import HTTPException
+from fastapi import HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.types import StudentID
-from app.repositories.student_repository import StudentRepository
+from app.interfaces.student_interface import StudentInterface
 from app.schemas.student import StudentCreate, StudentPatch, StudentUpdate
 
 
 class StudentService:
-    def __init__(self, repository: StudentRepository, session: AsyncSession):
+    def __init__(self, repository: StudentInterface, session: AsyncSession):
         self.logger = logging.getLogger(__name__)
         self.repository = repository
         self.session = session
@@ -63,9 +63,19 @@ class StudentService:
 
     async def get_academic_summary(self, student_id):
         async with self.session.begin():
-            return await self.repository.get_academic_summary(student_id)
+            row = await self.repository.get_academic_summary(student_id)
+            if row is None:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND, detail="No Student Found"
+                )
+            return row
 
     async def get_student_marks(self, student_id: int):
         async with self.session.begin():
-            return await self.repository.get_student_marks(student_id)
+            row = await self.repository.get_student_marks(student_id)
 
+            if row is None:
+                raise HTTPException(
+                    status_code=status.HTTP_404_NOT_FOUND, detail="No Student Found"
+                )
+            return row

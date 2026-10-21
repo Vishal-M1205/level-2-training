@@ -1,11 +1,12 @@
-from app.repositories.class_repository import ClassRepository
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.exceptions import HTTPException
 from fastapi import status
 
+from app.interfaces.class_interface import ClassInterface
+
 
 class ClassService:
-    def __init__(self, repository: ClassRepository, session: AsyncSession):
+    def __init__(self, repository: ClassInterface, session: AsyncSession):
         self.repository = repository
         self.session = session
 

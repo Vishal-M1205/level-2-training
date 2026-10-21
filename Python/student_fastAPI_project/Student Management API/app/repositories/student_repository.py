@@ -1,6 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, insert, update, delete, text
 from sqlalchemy.orm import selectinload
+from app.interfaces.student_interface import StudentInterface
 from app.models.exam_mark import ExamMark
 from app.models.student import Student
 from app.schemas.student import StudentCreate, StudentUpdate
@@ -8,7 +9,7 @@ from app.schemas.student import StudentCreate, StudentUpdate
 import math
 
 
-class StudentRepository:
+class StudentRepository(StudentInterface):
 
     def __init__(self, session: AsyncSession):
         self.session = session
@@ -35,7 +36,10 @@ class StudentRepository:
         total_records = await self.session.execute(query)
         total_records = total_records.scalar()
 
-        total_pages = math.ceil(total_records / limit) or 1
+        if not total_records:
+            total_pages = 0
+        else:
+            total_pages = math.ceil(total_records / limit) or 1
 
         return {
             "students": rows,
@@ -110,6 +114,8 @@ class StudentRepository:
 
         row = result.fetchone()
 
+        if not row:
+            return None
         return {
             "total": row.total,
             "average": row.average,
@@ -123,7 +129,10 @@ class StudentRepository:
         )
 
         row = await self.session.execute(stmnt)
-        row = row.scalar_one()
+        row = row.scalar_one_or_none()
+
+        if not row:
+            return None
 
         return {
             "name": row.name,
