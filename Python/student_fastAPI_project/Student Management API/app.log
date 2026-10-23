@@ -11307,3 +11307,59 @@ sqlalchemy.exc.InterfaceError: (sqlalchemy.dialects.postgresql.asyncpg.Interface
 2026-10-21 12:29:05,638 : httpx2 : INFO : HTTP Request: POST http://testserver/subjects/ "HTTP/1.1 201 Created"
 2026-10-21 12:29:05,898 : httpx2 : INFO : HTTP Request: DELETE http://testserver/subjects/1 "HTTP/1.1 204 No Content"
 2026-10-21 12:29:06,128 : httpx2 : INFO : HTTP Request: GET http://testserver/subjects/1 "HTTP/1.1 404 Not Found"
+2026-10-23 11:18:03,869 : app.main : ERROR : Unhandled error processing GET /students/14/academic-summary: 2 validation errors:
+  {'type': 'decimal_type', 'loc': ('response', 'total'), 'msg': 'Decimal input should be an integer, float, string or Decimal object', 'input': None}
+  {'type': 'decimal_type', 'loc': ('response', 'average'), 'msg': 'Decimal input should be an integer, float, string or Decimal object', 'input': None}
+
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\routes\student_routes.py", line 152, in get_academic_summary
+    GET /students/{student_id}/academic-summary
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\telemetry\_asgi.py", line 151, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\routing.py", line 676, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2786, in app
+    await route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1817, in handle
+    await self.original_router.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 2869, in handle
+    await included_router._handle_selected(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1843, in _handle_selected
+    await original_route.handle(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 1308, in handle
+    await effective_context.app(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 165, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 151, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 749, in app
+    content = await serialize_response(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<11 lines>...
+    )
+    ^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\.venv\Lib\site-packages\fastapi\routing.py", line 331, in serialize_response
+    raise ResponseValidationError(
+    ...<3 lines>...
+    )
+fastapi.exceptions.ResponseValidationError: 2 validation errors:
+  {'type': 'decimal_type', 'loc': ('response', 'total'), 'msg': 'Decimal input should be an integer, float, string or Decimal object', 'input': None}
+  {'type': 'decimal_type', 'loc': ('response', 'average'), 'msg': 'Decimal input should be an integer, float, string or Decimal object', 'input': None}
+
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\student_fastAPI_project\Student Management API\app\routes\student_routes.py", line 152, in get_academic_summary
+    GET /students/{student_id}/academic-summary

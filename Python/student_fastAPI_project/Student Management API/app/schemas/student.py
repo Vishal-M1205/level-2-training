@@ -35,7 +35,7 @@ class StudentListResponse(BaseModel):
 
 
 class StudentCreate(BaseModel):
-    name: str = Field(min_length=3)
+    name: str = Field(min_length=3, pattern=r"^[A-Za-z\s]+$")
     age: int = Field(ge=17, le=35)
     gender: str = Field(max_length=1, examples=["M", "F"])
 
@@ -52,7 +52,7 @@ But for a clear meaning in API and seperate Responsibility, need to create these
 
 
 class StudentUpdate(BaseModel):
-    name: str = Field(min_length=3)
+    name: str = Field(min_length=3, pattern=r"^[A-Za-z\s]+$")
     age: int = Field(ge=17, le=35)
     gender: str = Field(max_length=1, examples=["M", "F"])
 
@@ -63,7 +63,7 @@ class StudentUpdate(BaseModel):
 
 
 class StudentPatch(BaseModel):
-    name: Optional[str] = Field(min_length=3, default=None)
+    name: Optional[str] = Field(min_length=3, pattern=r"^[A-Za-z\s]+$", default=None)
     age: Optional[int] = Field(ge=17, le=35, default=None)
     gender: Optional[str] = Field(max_length=1, examples=["M", "F"], default=None)
 
@@ -83,3 +83,14 @@ class StudentMarkResponse(BaseModel):
     gender: str = Field(max_length=1, examples=["M", "F"])
 
     marks: dict[str, int]
+
+
+class StudentIdCardResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True, extra="forbid")
+
+    student_id: int
+    student_name: str
+    id_card_id: int
+    original_filename: str
+    stored_filename: str
+    file_path: str

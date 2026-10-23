@@ -12,6 +12,7 @@ from app.core.config import config
 from app.core.types import StudentID
 from app.schemas.result import ResultResponse, AcademicSummary
 from app.schemas.student import (
+    StudentIdCardResponse,
     StudentMarkResponse,
     StudentPatch,
     StudentResponse,
@@ -172,3 +173,11 @@ async def upload_student_id_card(
     service: Annotated[IdCardService, Depends(get_id_card_service)],
 ):
     return await service.upload_student_id_card(student_id, file)
+
+
+@router.get("/{student_id}/idcards", response_model=StudentIdCardResponse)
+async def get_student_id_card(
+    student_id: StudentID,
+    service: Annotated[IdCardService, Depends(get_id_card_service)],
+):
+    return await service.get_student_id_card(student_id)

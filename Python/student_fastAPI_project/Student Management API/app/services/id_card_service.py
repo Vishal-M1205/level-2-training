@@ -55,19 +55,24 @@ class IdCardService:
             async with self.session.begin():
                 id_card = await self.repository.upload_student_id_card(id_card_payload)
 
-                if id_card is None:
-                    raise HTTPException(status_code=404, detail="ID Card Not Found")
-
                 return id_card
 
         except IntegrityError:
             if Path(id_card_file_path).exists():
-                Path(id_card_file_path).unlink(missing_ok=True)
+                Path(id_card_file_path).unlink()
             raise HTTPException(
                 status_code=status.HTTP_409_CONFLICT,
                 detail="ID Card Already Exists",
             )
         except Exception:
             if Path(id_card_file_path).exists():
-                Path(id_card_file_path).unlink(missing_ok=True)
+                Path(id_card_file_path).unlink()
             raise
+
+    async def get_student_id_card(self, student_id: int):
+        async with self.session.begin():
+            id_card = await self.repository.get_student_id_card(student_id)
+
+            if id_card is None:
+                raise HTTPException(status_code=404, detail="ID Card Not Found")
+            return id_card

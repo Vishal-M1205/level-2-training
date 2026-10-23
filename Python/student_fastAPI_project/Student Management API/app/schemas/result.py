@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel, Field, ConfigDict
 from decimal import Decimal
 
@@ -22,5 +24,5 @@ class AcademicSummary(BaseModel):
 
     model_config = ConfigDict(from_attributes=True)
 
-    total: Decimal = Field(max_digits=5, decimal_places=2, le=500.00)
-    average: Decimal = Field(max_digits=5, decimal_places=2, le=100.00)
+    total: Optional[Decimal] = Field(max_digits=5, decimal_places=2, le=500.00)
+    average: Optional[Decimal] = Field(max_digits=5, decimal_places=2, le=100.00)

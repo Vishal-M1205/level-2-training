@@ -18,8 +18,14 @@ class ExamMark(Base):
 
     """all the field are not null because of the Mapped[datatype] didn't mention None, so it is inferred as NOT NULL """
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
-    subject_id: Mapped[int] = mapped_column(Integer, ForeignKey("subjects.id"))
-    student_id: Mapped[int] = mapped_column(Integer, ForeignKey("students.id"))
+    subject_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("subjects.id", ondelete="CASCADE", name="fk_exam_mark_subject_id"),
+    )
+    student_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("students.id", ondelete="CASCADE", name="fk_exam_mark_student_id"),
+    )
     mark: Mapped[float] = mapped_column(Numeric(5, 2), nullable=False)
 
     subject: Mapped["Subject"] = relationship(back_populates="exam_marks")
