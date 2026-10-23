@@ -25,3 +25,108 @@ Traceback (most recent call last):
   File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\validators\member_validator.py", line 17, in validate_id
     raise ValueError(msg)
 ValueError: Member ID must start with 'M'.
+2026-10-23 14:29:30,352 - validators.member_validator - ERROR - Phone number must contain exactly 10 digits. 
+2026-10-23 14:29:30,354 - util.member_input - ERROR - Phone number must contain exactly 10 digits. 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\util\member_input.py", line 35, in get_member_mobile_no
+    self.validator.validate_phone(phone)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\validators\member_validator.py", line 51, in validate_phone
+    raise ValueError(msg)
+ValueError: Phone number must contain exactly 10 digits.
+2026-10-23 14:30:30,946 - validators.member_validator - ERROR - Age must be between 18 and 100. 
+2026-10-23 14:30:30,947 - util.member_input - ERROR - Age must be between 18 and 100. 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\util\member_input.py", line 44, in get_member_age
+    self.validator.validate_age(age)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\validators\member_validator.py", line 70, in validate_age
+    raise ValueError(msg)
+ValueError: Age must be between 18 and 100.
+2026-10-23 14:37:04,998 - validators.member_validator - ERROR - Member ID must have 4 characters. 
+2026-10-23 14:37:05,001 - util.member_input - ERROR - Member ID must have 4 characters. 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\util\member_input.py", line 17, in get_member_id
+    self.validator.validate_id(member_id)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\validators\member_validator.py", line 18, in validate_id
+    raise ValueError(msg)
+ValueError: Member ID must have 4 characters.
+2026-10-23 14:42:38,870 - util.member_input - ERROR - Member ID must have 4 characters. 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\util\member_input.py", line 17, in get_member_id
+    self.validator.validate_id(member_id)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\validators\member_validator.py", line 18, in validate_id
+    raise ValueError(msg)
+ValueError: Member ID must have 4 characters.
+2026-10-23 14:42:50,429 - util.member_input - ERROR - Phone number must contain exactly 10 digits. 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\util\member_input.py", line 35, in get_member_mobile_no
+    self.validator.validate_phone(phone)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\validators\member_validator.py", line 57, in validate_phone
+    raise ValueError(msg)
+ValueError: Phone number must contain exactly 10 digits.
+2026-10-23 14:42:55,193 - util.member_input - ERROR - Age must be between 18 and 100. 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\util\member_input.py", line 44, in get_member_age
+    self.validator.validate_age(age)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\validators\member_validator.py", line 76, in validate_age
+    raise ValueError(msg)
+ValueError: Age must be between 18 and 100.
+2026-10-23 14:43:01,743 - __main__ - ERROR - Member ID already exists 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\main.py", line 91, in main
+    member_service.add_member(member)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\services\member_service.py", line 23, in add_member
+    raise MemberException(msg)
+exceptions.member_exception.MemberException: Member ID already exists
+2026-10-23 14:43:38,222 - validators.member_validator - ERROR - Member ID must have 4 characters. 
+2026-10-23 14:43:38,224 - util.member_input - ERROR - Member ID must have 4 characters. 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\util\member_input.py", line 17, in get_member_id
+    self.validator.validate_id(member_id)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\validators\member_validator.py", line 18, in validate_id
+    raise ValueError(msg)
+ValueError: Member ID must have 4 characters.
+2026-10-23 14:58:18,724 - __main__ - ERROR - No member found 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\main.py", line 123, in main
+    existing_member = member_service.get_member(member_id)
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\services\member_service.py", line 33, in get_member
+    raise MemberException(msg)
+exceptions.member_exception.MemberException: No member found
+2026-10-23 15:14:04,400 - util.member_report - INFO - Report generated successfully 
+2026-10-23 15:15:22,281 - repositories.json_repository - ERROR - D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\data\memberships.csv : wrong JSON Format 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\repositories\json_repository.py", line 13, in read
+    data = json.load(file)
+  File "C:\Program Files\Python314\Lib\json\__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=object_pairs_hook, **kw)
+  File "C:\Program Files\Python314\Lib\json\__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\Program Files\Python314\Lib\json\decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\Python314\Lib\json\decoder.py", line 363, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+2026-10-23 15:15:22,301 - __main__ - ERROR - 'NoneType' object is not iterable 
+Traceback (most recent call last):
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\main.py", line 100, in main
+    memberships = membership_service.get_membership_plans()
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\services\membership_service.py", line 25, in get_membership_plans
+    return self.membership_repository.get_all()
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "D:\VISHAL M (CG-VAK)\LEVEL 2\Python\membership_system_oops\repositories\membership_repository.py", line 20, in get_all
+    return [Membership.model_validate(membership) for membership in data]
+                                                                    ^^^^
+TypeError: 'NoneType' object is not iterable

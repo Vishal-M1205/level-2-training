@@ -19,7 +19,7 @@ class MemberService:
 
         if existing_member is not None:
             msg = "Member ID already exists"
-            logger.error(msg)
+            print(msg)
             raise MemberException(msg)
 
         self.member_repository.add(member)
@@ -29,7 +29,7 @@ class MemberService:
 
         if member is None:
             msg = "No member found"
-            logger.error(msg)
+            print(msg)
             raise MemberException(msg)
 
         return member
@@ -44,7 +44,7 @@ class MemberService:
 
         if existing_member is None:
             msg = "No member found"
-            logger.error(msg)
+            print(msg)
             raise MemberException(msg)
 
         self.member_repository.update(member)

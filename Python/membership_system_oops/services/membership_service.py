@@ -29,7 +29,7 @@ class MembershipService:
 
         if membership is None:
             msg = "Membership plan not found"
-            logger.error(msg)
+            print(msg)
             raise MembershipException(msg)
 
         return membership

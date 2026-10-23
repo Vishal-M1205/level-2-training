@@ -102,5 +102,13 @@
         "age": 34,
         "city": "Coimbatore",
         "membership_id": "MS001"
+    },
+    {
+        "member_id": "M026",
+        "name": "VISHAL",
+        "phone": "1234567890",
+        "age": 23,
+        "city": "Chennai",
+        "membership_id": "MS002"
     }
 ]

@@ -4,6 +4,7 @@ from core.config import members_file, memberships_file, cities
 
 
 from repositories.csv_repository import CSVRepository
+from repositories.json_repository import JsonRepository
 from repositories.member_repository import MemberRepository
 from repositories.membership_repository import MembershipRepository
 
@@ -118,7 +119,7 @@ async def main() -> None:
 
             elif option == "5":
 
-                member_id = member_input.get_member_id(search=True)
+                member_id = member_input.get_member_id()
 
                 existing_member = member_service.get_member(member_id)
 
