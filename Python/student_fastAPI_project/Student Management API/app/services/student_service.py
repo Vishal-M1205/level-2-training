@@ -4,6 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.types import StudentID
 from app.interfaces.student_interface import StudentInterface
+from app.models.student import Student
 from app.schemas.student import StudentCreate, StudentPatch, StudentUpdate
 
 
@@ -13,7 +14,7 @@ class StudentService:
         self.repository = repository
         self.session = session
 
-    async def get_all_students(self, page: int, limit: int, **kwargs):
+    async def get_all_students(self, page: int, limit: int, **kwargs) -> dict:
         async with self.session.begin():
             query_params = {
                 key: value for key, value in kwargs.items() if value is not None
@@ -23,7 +24,7 @@ class StudentService:
                 page, limit, offset, query_params
             )
 
-    async def get_student_by_id(self, student_id: StudentID):
+    async def get_student_by_id(self, student_id: StudentID) -> Student:
         async with self.session.begin():
             student = await self.repository.get_student_by_id(student_id)
             if student is None:

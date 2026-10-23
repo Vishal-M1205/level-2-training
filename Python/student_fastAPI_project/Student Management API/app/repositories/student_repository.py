@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, insert, update, delete, text
 from sqlalchemy.orm import selectinload
@@ -14,7 +16,9 @@ class StudentRepository(StudentInterface):
     def __init__(self, session: AsyncSession):
         self.session = session
 
-    async def get_all_students(self, page: int, limit: int, offset: int, params: dict):
+    async def get_all_students(
+        self, page: int, limit: int, offset: int, params: dict
+    ) -> dict:
         query = select(Student)
 
         for field, value in params.items():
@@ -49,7 +53,7 @@ class StudentRepository(StudentInterface):
             "total_pages": total_pages,
         }
 
-    async def get_student_by_id(self, student_id: int):
+    async def get_student_by_id(self, student_id: int) -> Optional[Student]:
         row = await self.session.get(Student, student_id)
         return row
 
@@ -60,7 +64,7 @@ class StudentRepository(StudentInterface):
 
     """
 
-    async def create_student(self, student: StudentCreate):
+    async def create_student(self, student: StudentCreate) -> Student:
         stmnt = insert(Student).values(**student.model_dump()).returning(Student)
 
         row = await self.session.execute(stmnt)
@@ -68,7 +72,9 @@ class StudentRepository(StudentInterface):
 
         return row
 
-    async def update_student(self, student_id: int, student: StudentUpdate):
+    async def update_student(
+        self, student_id: int, student: StudentUpdate
+    ) -> Optional[Student]:
         stmnt = (
             update(Student)
             .where(Student.id == student_id)
@@ -81,7 +87,7 @@ class StudentRepository(StudentInterface):
 
         return row
 
-    async def delete_student(self, student_id: int):
+    async def delete_student(self, student_id: int) -> Optional[int]:
         stmnt = delete(Student).where(Student.id == student_id).returning(Student.id)
 
         row = await self.session.execute(stmnt)
@@ -89,7 +95,7 @@ class StudentRepository(StudentInterface):
 
         return row
 
-    async def patch_student(self, student_id: int, payload: dict):
+    async def patch_student(self, student_id: int, payload: dict) -> Optional[Student]:
         stmnt = (
             update(Student)
             .where(Student.id == student_id)
@@ -102,7 +108,7 @@ class StudentRepository(StudentInterface):
 
         return row
 
-    async def get_academic_summary(self, student_id):
+    async def get_academic_summary(self, student_id) -> dict:
         result = await self.session.execute(
             text("""
             CALL academic_summary(
@@ -121,7 +127,7 @@ class StudentRepository(StudentInterface):
             "average": row.average,
         }
 
-    async def get_student_marks(self, student_id: int):
+    async def get_student_marks(self, student_id: int) -> Optional[dict]:
         stmnt = (
             select(Student)
             .where(Student.id == student_id)
